@@ -1,0 +1,13 @@
+train: C:\Users\rlaxo\Desktop\opensource2_1\yolo\yolov5\yolov5\train\images
+val: C:\Users\rlaxo\Desktop\opensource2_1\yolo\yolov5\yolov5\valid\images
+test: C:\Users\rlaxo\Desktop\opensource2_1\yolo\yolov5\yolov5\test\images
+
+nc: 6
+names: ['Chilsung', 'Cocacola', 'Narangd', 'Pepsi', 'Pepsi_Zero', 'Sprite']
+
+roboflow:
+  workspace: hello-et1mg
+  project: mart-product-detect
+  version: 6
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/hello-et1mg/mart-product-detect/dataset/6
