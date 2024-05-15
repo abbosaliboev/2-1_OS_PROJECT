@@ -1,3 +1,11 @@
+# 기존 YOLOv5의 detect.py의 소스코드를 기본 베이스로 하되 저희 프로그램은 모델의 다양한 출력값 중
+# [제품명], [확률]만 필요하므로 이외의 추가기능(예측한 이미지를 jpg형식으로 폴더에 저장, csv파일 생성 등등)은 주석 처리하거나 if문에 False를 걸어 실행되지 못하도록 했습니다.
+# 또한 [제품명] 과 [확률]을 출력할 수 있도록 직접 코드를 작성해서 구현했습니다.
+
+# detect.py 소스코드의 수정사항은 수정된 코드 옆에 주석으로 작성하였습니다.
+
+
+
 # YOLOv5 🚀 by Ultralytics, AGPL-3.0 license
 """
 Run YOLOv5 detection inference on images, videos, directories, globs, YouTube, webcam, streams, etc.
@@ -36,6 +44,9 @@ import sys
 from pathlib import Path
 
 import torch
+
+# 모델의 출력값 중 [제품명]과 [확률]을 별도로 저장하기 위한 리스트 result
+result = []
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # YOLOv5 root directory
@@ -106,9 +117,10 @@ def run(
     if is_url and is_file:
         source = check_file(source)  # download
 
+    # 디렉터리에 저장할 필요가 없기 때문에 주석 처리
     # Directories
-    save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
-    (save_dir / "labels" if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
+    # save_dir = increment_path(Path(project) / name, exist_ok=exist_ok)  # increment run
+    # (save_dir / "labels" if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
     # Load model
     device = select_device(device)
@@ -143,7 +155,7 @@ def run(
 
         # Inference
         with dt[1]:
-            visualize = increment_path(save_dir / Path(path).stem, mkdir=True) if visualize else False
+            visualize = False
             if model.xml and im.shape[0] > 1:
                 pred = None
                 for image in ims:
@@ -158,21 +170,22 @@ def run(
         with dt[2]:
             pred = non_max_suppression(pred, conf_thres, iou_thres, classes, agnostic_nms, max_det=max_det)
 
+        # 아래의 사용하지 않는 기능들은 주석처리 했습니다.
         # Second-stage classifier (optional)
         # pred = utils.general.apply_classifier(pred, classifier_model, im, im0s)
 
         # Define the path for the CSV file
-        csv_path = save_dir / "predictions.csv"
+        # csv_path = save_dir / "predictions.csv"
 
         # Create or append to the CSV file
-        def write_to_csv(image_name, prediction, confidence):
-            """Writes prediction data for an image to a CSV file, appending if the file exists."""
-            data = {"Image Name": image_name, "Prediction": prediction, "Confidence": confidence}
-            with open(csv_path, mode="a", newline="") as f:
-                writer = csv.DictWriter(f, fieldnames=data.keys())
-                if not csv_path.is_file():
-                    writer.writeheader()
-                writer.writerow(data)
+        # def write_to_csv(image_name, prediction, confidence):
+        #     """Writes prediction data for an image to a CSV file, appending if the file exists."""
+        #     data = {"Image Name": image_name, "Prediction": prediction, "Confidence": confidence}
+        #     with open(csv_path, mode="a", newline="") as f:
+        #         writer = csv.DictWriter(f, fieldnames=data.keys())
+        #         if not csv_path.is_file():
+        #             writer.writeheader()
+        #         writer.writerow(data)
 
         # Process predictions
         for i, det in enumerate(pred):  # per image
@@ -184,8 +197,9 @@ def run(
                 p, im0, frame = path, im0s.copy(), getattr(dataset, "frame", 0)
 
             p = Path(p)  # to Path
-            save_path = str(save_dir / p.name)  # im.jpg
-            txt_path = str(save_dir / "labels" / p.stem) + ("" if dataset.mode == "image" else f"_{frame}")  # im.txt
+            # 디렉터리를 만들 필요가 없으므로 아래의 코드 주석 처리
+            # save_path = str(save_dir / p.name)  # im.jpg
+            # txt_path = str(save_dir / "labels" / p.stem) + ("" if dataset.mode == "image" else f"_{frame}")  # im.txt
             s += "%gx%g " % im.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
@@ -204,27 +218,35 @@ def run(
                     c = int(cls)  # integer class
                     label = names[c] if hide_conf else f"{names[c]}"
                     confidence = float(conf)
-                    confidence_str = f"{confidence:.2f}"
 
-                    if save_csv:
+                    # 아래의 코드는 모델의 출력값 중 [제품명]과 [확률]을 별도로 저장할 수 있도록 추가로 작성한 코드입니다.
+                    if(confidence>0.5): # 모델이 제품을 확신하는 정도가 50%가 넘는 경우에만 result 리스트에 추가합니다.
+                        temp = [] # [제품명] 과 [확률]을 저장할 리스트 변수 temp
+                        temp.append(label) # temp에 [제품명] 추가
+                        temp.append(confidence) # temp에 [확률] 추가
+                        result.append(temp) # result에 리스트 [temp] 추가
+                    # confidence_str = f"{confidence:.2f}"
+                    
+                    # 모델이 출력하는 [제품명]과 [확률]만 출력하면 되므로 아래의 추가기능들은 if문을 False로 변환하여 실행되지 못하도록 했습니다.
+                    if False:
                         write_to_csv(p.name, label, confidence_str)
 
-                    if save_txt:  # Write to file
+                    if False:  # Write to file
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
                         line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
                         with open(f"{txt_path}.txt", "a") as f:
                             f.write(("%g " * len(line)).rstrip() % line + "\n")
 
-                    if save_img or save_crop or view_img:  # Add bbox to image
+                    if False or False or False:  # Add bbox to image
                         c = int(cls)  # integer class
                         label = None if hide_labels else (names[c] if hide_conf else f"{names[c]} {conf:.2f}")
                         annotator.box_label(xyxy, label, color=colors(c, True))
-                    if save_crop:
+                    if False:
                         save_one_box(xyxy, imc, file=save_dir / "crops" / names[c] / f"{p.stem}.jpg", BGR=True)
 
             # Stream results
-            im0 = annotator.result()
-            if view_img:
+            # im0 = annotator.result()
+            if False:
                 if platform.system() == "Linux" and p not in windows:
                     windows.append(p)
                     cv2.namedWindow(str(p), cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
@@ -233,7 +255,7 @@ def run(
                 cv2.waitKey(1)  # 1 millisecond
 
             # Save results (image with detections)
-            if save_img:
+            if False:
                 if dataset.mode == "image":
                     cv2.imwrite(save_path, im0)
                 else:  # 'video' or 'stream'
@@ -252,17 +274,17 @@ def run(
                     vid_writer[i].write(im0)
 
         # Print time (inference-only)
-        LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
+        # LOGGER.info(f"{s}{'' if len(det) else '(no detections), '}{dt[1].dt * 1E3:.1f}ms")
 
     # Print results
-    t = tuple(x.t / seen * 1e3 for x in dt)  # speeds per image
-    LOGGER.info(f"Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS per image at shape {(1, 3, *imgsz)}" % t)
-    if save_txt or save_img:
-        s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ""
-        LOGGER.info(f"Results saved to {colorstr('bold', save_dir)}{s}")
+    # t = tuple(x.t / seen * 1e3 for x in dt)  # speeds per image
+    # LOGGER.info(f"Speed: %.1fms pre-process, %.1fms inference, %.1fms NMS per image at shape {(1, 3, *imgsz)}" % t)
+    # if save_txt or save_img:
+        # s = f"\n{len(list(save_dir.glob('labels/*.txt')))} labels saved to {save_dir / 'labels'}" if save_txt else ""
+        # LOGGER.info(f"Results saved to {colorstr('bold', save_dir)}{s}")
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
-
+    print(result)
 
 def parse_opt():
     """Parses command-line arguments for YOLOv5 detection, setting inference options and model configurations."""
