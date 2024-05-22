@@ -1,0 +1,19 @@
+import sqlite3
+con = sqlite3.connect("product.db")
+
+cur = con.cursor()
+"""
+cur.execute("CREATE TABLE product(name, brand, price, serving_size, calories)")
+
+data = [
+    ("Coca Cola", "Coca Cola Company", 2000, 355, 132),
+    ("Sprite", "Coca Cola Company", 1700, 355, 144),
+    ("Pepsi", "PepsiCo", 1900, 355, 160),
+    ("Chilsung Cider", "Lotte Chilsung Beverage", 1600, 355, 150),
+    ("Narangda Cider", "Dong-A Otsuka", 1700, 345, 0)
+]
+cur.executemany("INSERT INTO product VALUES(?, ?, ?, ?, ?)", data)
+con.commit()
+"""
+for row in cur.execute("SELECT name, brand, price FROM product ORDER BY price"):
+    print(row)
