@@ -1,0 +1,34 @@
+import sqlite3
+con = sqlite3.connect("temp.db")
+con = sqlite3.connect("product.db")
+
+cur = con.cursor()
+
+#cur.execute("CREATE TABLE temp(name)")
+#cur.execute 는 처음 한번 데이터 베이스 생성하는데만 사용해야함
+
+#첫데이터베이스 생성시에만 사용
+cur.execute("DELETE FROM temp")
+cur.execute("INSERT INTO temp VALUES('Cocacola')")
+con.commit()
+
+#res = cur.execute("SELECT name FROM temp")
+#print(res.fetchone()[0])
+
+res = cur.execute("SELECT name FROM temp")
+result = res.fetchone()
+
+print("\nfrom temp: ")
+print(result[0])
+
+
+cur.execute("SELECT * FROM product WHERE name=?", (result[0],))
+result = cur.fetchone()
+print("\nfrom product:")
+print(result[0])    #name
+print(result[1])    #brand company
+print(result[2])    #price
+print(result[3])    #capacity
+print(result[4])    #calorie
+
+#con.close()
