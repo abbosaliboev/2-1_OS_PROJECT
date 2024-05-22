@@ -3,8 +3,10 @@ con = sqlite3.connect("product.db")
 
 cur = con.cursor()
 """
+#creates product database with name, brand, price, capacity, calorie as sub
 cur.execute("CREATE TABLE product(name, brand, price, serving_size, calories)")
 
+# data for database
 data = [
     ("Cocacola", "Coca Cola Company", 2000, 355, 132),
     ("Sprite", "Coca Cola Company", 1700, 355, 144),
@@ -12,8 +14,10 @@ data = [
     ("Chilsung", "Lotte Chilsung Beverage", 1600, 355, 150),
     ("Narangd", "Dong-A Otsuka", 1700, 345, 0)
 ]
+#insert into database
 cur.executemany("INSERT INTO product VALUES(?, ?, ?, ?, ?)", data)
 con.commit()
 """
+#test print database
 for row in cur.execute("SELECT name, brand, price FROM product ORDER BY price"):
     print(row)
