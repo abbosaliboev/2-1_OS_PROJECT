@@ -1,0 +1,13 @@
+import sqlite3
+con = sqlite3.connect("temp.db")
+
+cur = con.cursor()
+
+#cur.execute("CREATE TABLE temp(name)")
+#cur.execute 는 처음 한번 데이터 베이스 생성하는데만 사용해야함
+
+TempResult = "replace with yolo5 result"
+cur.execute("INSERT INTO temp (name) VALUES (?)", (TempResult,))
+con.commit()
+
+con.close()
