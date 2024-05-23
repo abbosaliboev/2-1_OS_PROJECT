@@ -1,0 +1,57 @@
+<RootWidget>:
+    orientation: 'vertical'
+    padding: 10
+    spacing: 10
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1  # Oq fon rangi
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        spacing: 130
+        size_hint_y: None
+        height: '32dp'
+        Button:
+            text: '1'
+            background_color: 0, 1, 1, 1  # Qora tugma rangi
+        Button:
+            text: '2'
+            background_color: 0, 1, 1, 1
+        Button:
+            text: '3'
+            background_color: 0, 1, 1, 1
+
+    BoxLayout:
+
+
+
+
+        Camera:
+            id: camera
+            resolution: (640, 480)
+            play: False
+
+
+    BoxLayout:
+        size_hint_y: None
+        height: '100dp'  # Increase the height to accommodate the button size
+        padding: [0, 0]
+        pos_hint: {'center_x': 0.83}
+        Button:
+            id: microphone_button
+            text: 'Micro'
+            size_hint: None, None
+            size: 200, 200
+            pos_hint: {'center_x': 0.83, 'center_y': 0.5}  # Center the button horizontally and vertically
+            background_normal: ''
+            background_color: (48/255, 84/255, 150/255, 1)  # Kok tugma rangi
+            on_press: root.toggle_microphone()
+            canvas.before:
+                Color:
+                    rgba: (0, 0, 0, 1)
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [50]
