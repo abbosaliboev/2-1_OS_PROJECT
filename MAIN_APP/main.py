@@ -28,6 +28,7 @@ cur.execute("SELECT * FROM product WHERE name=?", (result[0],))
 result = cur.fetchone()
 
 class SecondScreen(Screen):
+    productdata=Stringproperty(result)
     def toggle_microphone(self):
         # Add logic for enabling/disabling the microphone here
         pass
