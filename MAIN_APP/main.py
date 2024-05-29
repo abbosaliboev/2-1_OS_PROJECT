@@ -24,7 +24,7 @@ class MainScreen(Screen):
 #save name to "name"
 
 #find referring product in database and save info to result
-cur.execute("SELECT * FROM product WHERE name=?", (result[0],))
+cur.execute("SELECT * FROM product WHERE name=Cocacola", (result[0],))
 result = cur.fetchone()
 
 class SecondScreen(Screen):
