@@ -42,6 +42,7 @@ import os
 import platform
 import sys
 from pathlib import Path
+import json
 
 import torch
 
@@ -285,6 +286,10 @@ def run(
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
     print(result)
+    
+    # result 리스트를 JSON 파일로 저장하는 코드 추가
+    with open('result.json', 'w') as f:
+        json.dump(result, f)
 
 def parse_opt():
     """Parses command-line arguments for YOLOv5 detection, setting inference options and model configurations."""
@@ -327,8 +332,9 @@ def main(opt):
     """Executes YOLOv5 model inference with given options, checking requirements before running the model."""
     check_requirements(ROOT / "requirements.txt", exclude=("tensorboard", "thop"))
     run(**vars(opt))
-
+    
 
 if __name__ == "__main__":
     opt = parse_opt()
     main(opt)
+    
