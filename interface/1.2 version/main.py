@@ -14,7 +14,7 @@ class MainScreen(Screen):
     def capture_image(self):
         camera = self.ids['camera']
         timestr = time.strftime("%Y%m%d_%H%M%S")
-        camera.export_to_png("photos/IMG_{}.png".format(timestr))
+        camera.export_to_png("photos/IMG.png".format(timestr))
         print("Captured")
 
 class SecondScreen(Screen):

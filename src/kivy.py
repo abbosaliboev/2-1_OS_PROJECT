@@ -5,7 +5,7 @@ from kivy.uix.camera import Camera
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 
-kivy.require('1.11.1')  # 현재 사용하는 Kivy 버전
+kivy.require('2.3.0')  # 현재 사용하는 Kivy 버전
 
 class CameraApp(App):
     def build(self):

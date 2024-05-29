@@ -1,0 +1,38 @@
+import sqlite3
+#connects to both temp and product database; temp would import data from yolo for app use
+con = sqlite3.connect("temp.db")
+con = sqlite3.connect("product.db")
+
+cur = con.cursor()
+
+#cur.execute("CREATE TABLE temp(name)")
+#cur.execute-CREATE 는 처음 한번 데이터 베이스 생성하는데만 사용해야함
+
+#첫데이터베이스 생성시에만 사용 - temp을 초기화 한 다음 첫 주소에 한 값을 저장 - 미래에 temp를 사용할때 마다 이 코드를 반복해야함
+cur.execute("DELETE FROM temp")
+cur.execute("INSERT INTO temp VALUES('Cocacola')")
+con.commit()
+
+#temp 에서 정상출력 확인
+#res = cur.execute("SELECT name FROM temp")
+#print(res.fetchone()[0])
+
+#temp에서 뽑은 다음 res에 저장
+res = cur.execute("SELECT name FROM temp")
+result = res.fetchone()
+
+#출력확인
+print("\nfrom temp: ")
+print(result[0])
+
+
+cur.execute("SELECT * FROM product WHERE name=?", (result[0],))
+result = cur.fetchone()
+print("\nfrom product:")
+print(result[0])    #name
+print(result[1])    #brand company
+print(result[2])    #price
+print(result[3])    #capacity
+print(result[4])    #calorie
+
+#con.close()
