@@ -19,7 +19,7 @@ def initialize_database():
         ("Sprite", "스프라이트", "코카콜라", 1700, "355ml"),
         ("Pepsi", "펩시 콜라", "펩시코", 1900, "355ml"),
         ("Chilsung", "칠성 사이다", "롯데 칠성", 1600, "355ml"),
-        ("Narangd", "나랑드 사이다", "나랑드", 1700, "355ml")
+        ("Narangd", "나랑드 사이다", "동아 오츠카", 1700, "355ml")
     ]
     for product in products:
         cursor.execute("INSERT INTO products (name, korean_name, brand, price, capacity) VALUES (?, ?, ?, ?, ?)", product)
