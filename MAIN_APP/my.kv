@@ -1,0 +1,241 @@
+<MainScreen>:
+    name: 'main'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 0
+        canvas.before:
+            Color:
+                rgba: 150/255, 150/255, 150/255, 1  
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            size_hint_y: None
+            height: '32dp'
+            spacing: 230
+            pos_hint: {'center_x': 0.5}
+
+            Button:
+                background_color: 0, 1, 1, 0
+                size_hint: None, None
+                size: 64, 64  # Set size according to the icon size
+                on_press: app.root.current = 'setting'
+                Image:
+                    source: 'png_files/set_icon.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+            Button:
+                background_color: 0, 1, 1, 0
+                size_hint: None, None
+                size: 64, 64  
+                Image:
+                    source: 'png_files/mic_icon.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+            Button:
+                background_color: 0, 1, 1, 0
+                size_hint: None, None
+                size: 64, 64  
+                on_press: app.root.current = 'second'
+                Image:
+                    source: 'png_files/speak_icon.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y 
+
+        Camera:
+            id: camera
+            resolution: (640, 480) 
+            size_hint: 1, 0.8
+            play: True
+
+ 
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp' 
+            padding: 0,0,0,0
+            pos_hint: {'center_x': 0.86}
+            spacing: 50
+            Button:
+                id: camera_button
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (60/255, 60/255, 60/255, 0)  
+                on_press: root.capture_image()
+                on_press: app.root.current = 'second'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]
+                Image:
+                    source: 'png_files/button_cam.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+<SecondScreen>:
+    name: 'second'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 60, 20
+        spacing: 0
+        canvas.before:
+            Color:
+                rgba: 150/255, 150/255, 150/255, 1   
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            size_hint_y: 0.1 
+
+        BoxLayout:
+            size_hint_y: 1  
+            canvas.before:
+                Color:
+                    rgba: 60/255, 165/255, 113/255, 1  
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18, 18, 18, 18]  
+
+            Label:
+                pos_hint: {'center_y': 0.5}
+                size_hint_y: None
+                text_size: self.size  
+                halign: 'center'
+                valign: 'middle'
+                text: root.productdata
+                color: 1, 1, 1, 1
+
+        BoxLayout:
+            size_hint_y: 0.1  
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  
+            pos_hint: {'center_x': 0.6}
+            spacing: 50
+            Button:
+                id: back_button
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]  
+                Image:
+                    source: 'png_files/button_back.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            Button:
+                id: microphone_button
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: root.toggle_microphone()
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]
+                Image:
+                    source: 'png_files/button_mic.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y 
+
+<SettingScreen>:
+    name: 'setting'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 60, 20
+        spacing: 0
+        canvas.before:
+            Color:
+                rgba: 150/255, 150/255, 150/255, 1   
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            size_hint_y: 0.1 
+
+        BoxLayout:
+            size_hint_y: 1  
+            canvas.before:
+                Color:
+                    rgba: 226/255, 223/255, 208/255, 1  
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [18, 18, 18, 18]  
+
+            Label:
+                pos_hint: {'center_y': 0.5}
+                size_hint_y: None
+                text_size: self.size  
+                halign: 'center'
+                valign: 'middle'
+                text: "information information information information information information  "
+                color: 0, 0, 0, 1
+
+        BoxLayout:
+            size_hint_y: 0.1 
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  
+            pos_hint: {'center_x': 0.6}
+            spacing: 50
+            Button:
+                id: back_button
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]  
+                Image:
+                    source: 'png_files/button_back.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            Button:
+                id: microphone_button
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: root.toggle_microphone()
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]
+                Image:
+                    source: 'png_files/button_mic.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y 
