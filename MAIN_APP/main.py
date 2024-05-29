@@ -11,7 +11,7 @@ import time
 
 import sqlite3
 con=sqlite3.connect("product.db")
-cur con.cursor()
+cur=con.cursor()
 
 
 class MainScreen(Screen):
