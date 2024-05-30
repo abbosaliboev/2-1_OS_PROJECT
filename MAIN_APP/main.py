@@ -21,16 +21,18 @@ class MainScreen(Screen):
         camera.export_to_png("photos/IMG.png".format(timestr))
 
         # yolo v5 사용부분
-        opt = detect.parse_opt() 
-        result = detect.main(opt)
-        print(result) # 디버깅
-        result = sorted(result,reverse=True,key=lambda x: x[1]) #확률을 기준으로 내림차순으로 정렬
-        print(result) # 디버깅 
-        product = result[0][0] # 가장 확률이 높은 아이템을 갖고오기
-        print(product)
+        opt = detect.parse_opt() # yolo의 작동을 위한 opt 받기
+        result = detect.main(opt) # predict의 main 실행 => 제품과 확률의 쌍인 list가 리턴됨
+        result = sorted(result,reverse=True,key=lambda x: x[1]) #확률을 기준으로 내림차순으로 정렬(다중 인식 처리를 위해)
+        if not(result): # 어떤 제품도 인식 되지 않은 경우 product를 None으로(나중에 데이터 베이스에 맞게 활용)
+            product = None
+        else: # 제품이 있는 경우 리스트에서 제품 이름을 갖고와 제품명 출력
+            product = result[0][0] # 가장 확률이 높은 아이템을 갖고오기
+            print(product)
+        
+        # yolo로 제품명을 갖고 오는 것까지 구현완료 tts 구현, 알리가 프론트앤드 구현해줘야 함!
         
         
-        print("Captured")
 
 class SecondScreen(Screen):
     def toggle_microphone(self):
