@@ -7,6 +7,7 @@ from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.label import Label
+
 import time
 
 
@@ -15,6 +16,8 @@ class MainScreen(Screen):
         camera = self.ids['camera']
         timestr = time.strftime("%Y%m%d_%H%M%S")
         camera.export_to_png("photos/IMG.png".format(timestr))
+        
+        
         print("Captured")
 
 class SecondScreen(Screen):

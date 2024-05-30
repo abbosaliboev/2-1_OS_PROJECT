@@ -79,8 +79,8 @@ from utils.torch_utils import select_device, smart_inference_mode
 
 @smart_inference_mode()
 def run(
-    weights=ROOT / "yolov5s.pt",  # model path or triton URL
-    source=ROOT / "data/images",  # file/dir/URL/glob/screen/0(webcam)
+    weights=ROOT / "../yolo/yolov5/yolov5/runs/train/exp6/weights/best.pt",  # 경로 맞추기
+    source=ROOT / "photos/IMG.png",  # 사진 데이터 경로 맞춰주기
     data=ROOT / "data/coco128.yaml",  # dataset.yaml path
     imgsz=(640, 640),  # inference size (height, width)
     conf_thres=0.25,  # confidence threshold
@@ -220,7 +220,7 @@ def run(
                     confidence = float(conf)
 
                     # 아래의 코드는 모델의 출력값 중 [제품명]과 [확률]을 별도로 저장할 수 있도록 추가로 작성한 코드입니다.
-                    if(confidence>0.5): # 모델이 제품을 확신하는 정도가 50%가 넘는 경우에만 result 리스트에 추가합니다.
+                    if(confidence>0.8): # 모델이 제품을 확신하는 정도가 50%가 넘는 경우에만 result 리스트에 추가합니다.
                         temp = [] # [제품명] 과 [확률]을 저장할 리스트 변수 temp
                         temp.append(label) # temp에 [제품명] 추가
                         temp.append(confidence) # temp에 [확률] 추가
@@ -284,7 +284,7 @@ def run(
         # LOGGER.info(f"Results saved to {colorstr('bold', save_dir)}{s}")
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
-    print(result)
+    #print(result) # 디버깅을 위한 코드
 
 def parse_opt():
     """Parses command-line arguments for YOLOv5 detection, setting inference options and model configurations."""
@@ -325,8 +325,11 @@ def parse_opt():
 
 def main(opt):
     """Executes YOLOv5 model inference with given options, checking requirements before running the model."""
+    global result
+    result = [] # 매 사용시 result의 값이 누적되는 것을 막기 위해 코드 추가
     check_requirements(ROOT / "requirements.txt", exclude=("tensorboard", "thop"))
     run(**vars(opt))
+    return result
 
 
 if __name__ == "__main__":
