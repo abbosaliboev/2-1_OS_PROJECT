@@ -1,0 +1,157 @@
+ScreenManager:
+    MainScreen:
+    SecondScreen:
+    SettingScreen:
+
+<MainScreen>:
+    name: 'main'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        canvas.before:
+            Color:
+                rgba: 150/255, 150/255, 150/255, 1  # Gray background
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            size_hint_y: None
+            height: '32dp'
+            spacing: 130
+            pos_hint: {'top': 1} 
+            Button:
+                text: 'Set'
+                background_color: 0, 1, 1, 1
+                on_press: app.root.current = 'setting'
+            Button:
+                text: '2 page'
+                background_color: 0, 1, 1, 1
+                on_press: app.root.current = 'second'
+            Button:
+                text: '3'
+                background_color: 0, 1, 1, 1
+
+        BoxLayout:
+            Camera:
+                id: camera
+                resolution: (640, 480)
+                play: True
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  # Increase the height to accommodate the button size
+            padding: 0,0,0,0
+            pos_hint: {'center_x': 0.86}
+            spacing: 50
+            Button:
+                id: camera_button
+                text: 'Photo'
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (60/255, 60/255, 60/255, 1)  # Change alpha to 1
+                on_press: root.capture_image()
+
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+<SecondScreen>:
+    name: 'second'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        canvas.before:
+            Color:
+                rgba: 60/255, 60/255, 60/255, 1  # Gray background
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "Information page"
+            size_hint_y: None
+            height: '32dp'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  # Increase the height to accommodate the button size
+            padding: [0, 0]
+            pos_hint: {'center_x': 0.67}
+            spacing: 50
+            
+            Button:
+                id: back_button
+                text: 'Back'
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 1)  # Change alpha to 1
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Button:
+                id: microphone_button
+                text: 'Micro'
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 1)  # Change alpha to 1
+                on_press: root.toggle_microphone()
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+<SettingScreen>:
+    name: 'setting'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        canvas.before:
+            Color:
+                rgba: 60/255, 60/255, 60/255, 1  # Gray background
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "Setting page"
+            size_hint_y: None
+            height: '32dp'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  # Increase the height to accommodate the button size
+            padding: [0, 0]
+            pos_hint: {'center_x': 0.67}
+            spacing: 50
+            
+            Button:
+                id: back_button
+                text: 'Back'
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 1)  # Change alpha to 1
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
