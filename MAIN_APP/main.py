@@ -41,8 +41,10 @@ class MainScreen(Screen):
         # yolo로 제품명을 갖고 오는 것까지 구현완료 tts 구현, 알리가 프론트앤드 구현해줘야 함!
         
         
+        
 
 class SecondScreen(Screen):
+    
     
     def toggle_microphone(self):
         # Add logic for enabling/disabling the microphone here
