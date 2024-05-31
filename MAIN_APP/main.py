@@ -1,4 +1,5 @@
-# main.py
+# update 
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
@@ -7,10 +8,9 @@ from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.label import Label
-import sys # 경로 추가를 위해
+import sys
 import time
-
-#code to import database
+from plyer import vibrator 
 import sqlite3
 from kivy.properties import StringProperty
 con=sqlite3.connect("product.db")
@@ -22,11 +22,11 @@ sys.path.append("./../src")
 import detect # yolo의 detect 모듈 추가
 import our_gTTS
 
-product = None
-# 제품명을 저장하기 위한 변수
+product_name = None # 제품명을 저장하기 위한 변수
+
 class MainScreen(Screen):
     def capture_image(self):
-        global product
+        global product_name
         camera = self.ids['camera']
         timestr = time.strftime("%Y%m%d_%H%M%S")
         camera.export_to_png("photos/IMG.png".format(timestr))
@@ -48,23 +48,30 @@ class MainScreen(Screen):
         
         
         
-
 class SecondScreen(Screen):
-    #extract product data and send to .kv
-    def __init__(self, **kwargs):
-        super(SecondScreen, self).__init__(**kwargs)
-        self.load_product_data()
+     
+    # 아래 코드 실행시 오류가 발생하여 일단은 주석 처리 했습니다.
+    # my.kv가 1.3 버전으로 업데이트 되어 다시 세팅이 필요합니다.
 
-    def load_product_data(self):
-        global product_name
-        cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
-        product_data = cur.fetchone()
-        self.product_data = StringProperty(str(product_data))
-    
-    
+    #extract product data and send to .kv
+    # def __init__(self, **kwargs):
+    #     super(SecondScreen, self).__init__(**kwargs)
+    #     self.load_product_data()
+
+    # def load_product_data(self):
+    #     global product_name
+    #     cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
+    #     product_data = cur.fetchone() 
+    #     self.product_data = StringProperty(str(product_data))
     def toggle_microphone(self):
-        # Add logic for enabling/disabling the microphone here
+        
         pass
+
+class BasketScreen(Screen):
+    pass
+
+class PayScreen(Screen):
+    pass
 
 class SettingScreen(Screen):
     pass
@@ -74,9 +81,10 @@ class MyApp(App):
         sm = ScreenManager()
         sm.add_widget(MainScreen(name='main'))
         sm.add_widget(SecondScreen(name='second'))
+        sm.add_widget(BasketScreen(name='basket'))
+        sm.add_widget(PayScreen(name='pay'))
         sm.add_widget(SettingScreen(name='setting'))
         return sm
-
 
 if __name__ == '__main__':
     MyApp().run()
