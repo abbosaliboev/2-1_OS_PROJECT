@@ -10,6 +10,12 @@ from kivy.uix.label import Label
 import sys # 경로 추가를 위해
 import time
 
+#code to import database
+import sqlite3
+from kivy.properties import StringProperty
+con=sqlite3.connect("product.db")
+cur= con.cursor()
+
 sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로 추가
 sys.path.append("./../src")
 
@@ -30,19 +36,29 @@ class MainScreen(Screen):
         result = detect.main(opt) # predict의 main 실행 => 제품과 확률의 쌍인 list가 리턴됨
         result = sorted(result,reverse=True,key=lambda x: x[1]) #확률을 기준으로 내림차순으로 정렬(다중 인식 처리를 위해)
         if not(result): # 어떤 제품도 인식 되지 않은 경우 product를 None으로(나중에 데이터 베이스에 맞게 활용)
-            product = None
+            product_name = None
         else: # 제품이 있는 경우 리스트에서 제품 이름을 갖고와 제품명 출력
-            product = result[0][0] # 가장 확률이 높은 아이템을 갖고오기
-            print(product)
+            product_name = result[0][0] # 가장 확률이 높은 아이템을 갖고오기
+            print(product_name)
         ##### yolo에서 제품 추론 완료
 
         # tts 사용부분
-        our_gTTS.main(product)
+        our_gTTS.main(product_name)
         # yolo로 제품명을 갖고 오는 것까지 구현완료 tts 구현, 알리가 프론트앤드 구현해줘야 함!
         
         
 
 class SecondScreen(Screen):
+    #extract product data and send to .kv
+    def __init__(self, **kwargs):
+        super(SecondScreen, self).__init__(**kwargs)
+        self.load_product_data()
+
+    def load_product_data(self):
+        global product_name
+        cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
+        product_data = cur.fetchone()
+        self.product_data = StringProperty(str(product_data))
     
     def toggle_microphone(self):
         # Add logic for enabling/disabling the microphone here
