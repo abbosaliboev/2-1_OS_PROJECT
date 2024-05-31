@@ -1,3 +1,5 @@
+
+
 <MainScreen>:
     name: 'main'
     BoxLayout:
@@ -18,6 +20,7 @@
             pos_hint: {'center_x': 0.5}
 
             Button:
+                id: left_button
                 background_color: 0, 1, 1, 0
                 size_hint: None, None
                 size: 64, 64  # Set size according to the icon size
@@ -27,6 +30,7 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
             Button:
+                id: center_button
                 background_color: 0, 1, 1, 0
                 size_hint: None, None
                 size: 64, 64  
@@ -35,6 +39,7 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
             Button:
+                id: right_button
                 background_color: 0, 1, 1, 0
                 size_hint: None, None
                 size: 64, 64  
@@ -95,26 +100,231 @@
             size_hint_y: 0.1 
 
         BoxLayout:
+            size_hint_y: None 
+            pos_hint: {'center_x': 0.5}
+            height: '350dp'           
+            spacing: 50
+            Button:
+                id: main_button
+                padding: 10, 20
+                text: 'Product Information Product Information Product Information Product Information '
+                pos_hint: {'center_y': 0.5}
+                size_hint_y: 1
+                text_size: self.size 
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)                                 
+                halign: 'center'
+                valign: 'middle'
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:                        
+                        rgba: 60/255, 165/255, 113/255, 1  
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [18, 18, 18, 18]  
+
+        BoxLayout:
+            size_hint_y: 0.1  
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  
+            pos_hint: {'center_x': 0.6}
+            spacing: 50
+            Button:
+                id: back_button
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]  
+                Image:
+                    source: 'png_files/button_back.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            Button:
+                id: basket_button
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: app.root.current = 'basket'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]
+                Image:
+                    source: 'png_files/button_bas.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y 
+
+<BasketScreen>:
+    name: 'basket'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 60, 20
+        spacing: 0
+        canvas.before:
+            Color:
+                rgba: 150/255, 150/255, 150/255, 1   
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            size_hint_y: 0.1 
+
+        BoxLayout:
+            size_hint_y: None 
+            pos_hint: {'center_x': 0.5}
+            height: '270dp'           
+            spacing: 50
+            Button:
+                id: main_button
+                padding: 10, 10
+                text: 'Product Name Product Name Product Name Product Name'
+                pos_hint: {'center_y': 0.5}
+                size_hint_y: 1
+                text_size: self.size 
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)                                 
+                halign: 'center'
+                valign: 'middle'
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:                        
+                        rgba: 60/255, 165/255, 113/255, 1  
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [18, 18, 18, 18]  
+
+        BoxLayout:
+            size_hint_y: 0.1  
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  
+            pos_hint: {'center_x': 0.50}
+            spacing: 50
+            padding: 10,30
+            Button:
+                id: back_button
+                size_hint: None, None
+                size: 560, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: app.root.current = 'pay'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]  
+                Image:
+                    source: 'png_files/button_card.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  
+            pos_hint: {'center_x': 0.52}
+            spacing: 50
+            Button:
+                id: back_button
+                size_hint: None, None
+                size: 250, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]  
+                Image:
+                    source: 'png_files/button_back.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            Button:
+                id: bsket_button
+                size_hint: None, None
+                size: 270, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]
+                Image:
+                    source: 'png_files/button_trash.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y 
+
+<PayScreen>:
+    name: 'pay'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 60, 20
+        spacing: 0
+        canvas.before:
+            Color:
+                rgba: 150/255, 150/255, 150/255, 1   
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            size_hint_y: 0.1 
+
+        BoxLayout:
             size_hint_y: 1  
             canvas.before:
                 Color:
-                    rgba: 60/255, 165/255, 113/255, 1  
+                    rgba: 226/255, 223/255, 208/255, 0.3
                 RoundedRectangle:
                     size: self.size
                     pos: self.pos
                     radius: [18, 18, 18, 18]  
 
-            Label:
+            BoxLayout:
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: None
                 text_size: self.size  
-                halign: 'center'
-                valign: 'middle'
-                text: root.product_data            #print product_data
-                color: 1, 1, 1, 1
+                background_color: 0, 0, 0, 1
+ 
+
+                Image:
+                    source: 'png_files/qr.png'  
+                    size_hint: None, None
+                    size: 550, 200
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y 
+
 
         BoxLayout:
-            size_hint_y: 0.1  
+            size_hint_y: 0.1 
 
         BoxLayout:
             size_hint_y: None
@@ -159,6 +369,11 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y 
 
+
+
+
+
+
 <SettingScreen>:
     name: 'setting'
     BoxLayout:
@@ -191,7 +406,7 @@
                 text_size: self.size  
                 halign: 'center'
                 valign: 'middle'
-                text: "information information information information information information  "
+                text: "Setting Setting Setting Setting Setting Setting Setting Setting"
                 color: 0, 0, 0, 1
 
         BoxLayout:
