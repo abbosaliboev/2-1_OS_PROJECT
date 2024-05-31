@@ -49,9 +49,15 @@ class MainScreen(Screen):
         
 
 class SecondScreen(Screen):
-    cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
-    product_data = cur.fetchone()
-    data=StringProperty(product_data)
+    def __init__(self, **kwargs):
+        super(SecondScreen, self).__init__(**kwargs)
+        self.load_product_data()
+
+    def load_product_data(self):
+        global product_name
+        cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
+        product_data = cur.fetchone()
+        self.product_data = StringProperty(str(product_data))
     
     def toggle_microphone(self):
         # Add logic for enabling/disabling the microphone here
