@@ -456,3 +456,5 @@ android.permissions = CAMERA, RECORD_AUDIO, WRITE_EXTERNAL_STORAGE
 
 # (list) Application requirements
 requirements = python3,kivy,plyer
+
+requirements = python3,kivy,pyjnius
