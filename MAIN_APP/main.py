@@ -49,6 +49,7 @@ class MainScreen(Screen):
         
 
 class SecondScreen(Screen):
+    #extract product data and send to .kv
     def __init__(self, **kwargs):
         super(SecondScreen, self).__init__(**kwargs)
         self.load_product_data()
