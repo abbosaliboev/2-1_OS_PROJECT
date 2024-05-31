@@ -2,10 +2,12 @@ import json
 import os
 from gtts import gTTS
 import pygame
+import pygame.examples
 from database import get_product_info
 
+
 # 제품 정보를 음성으로 출력하는 함수
-def announce_product_info(product_name, confidence):
+def announce_product_info(product_name):
     product_info = get_product_info(product_name)
 
     if product_info is not None:
@@ -16,9 +18,13 @@ def announce_product_info(product_name, confidence):
 
     # gTTS를 사용하여 텍스트를 음성 파일로 저장
     tts = gTTS(text=tts_text, lang='ko', slow=False)
+
+    if os.path.exists("product_info.mp3"):
+        os.remove("product_info.mp3")
     tts.save("product_info.mp3")
 
     # pygame을 사용하여 음성 파일 재생
+    
     pygame.mixer.init()
     pygame.mixer.music.load("product_info.mp3")
     pygame.mixer.music.play()
@@ -27,31 +33,13 @@ def announce_product_info(product_name, confidence):
     while pygame.mixer.music.get_busy():
         pygame.time.Clock().tick(10)
 
+    pygame.mixer.quit() # Win32 error를 해결하기 위해 pygame.mixer 종료해주기
+                        # 종료해주지 않고 다시 실행하면 pygame.mixer가 이용하는 mp3파일이 삭제됨(사용중인 파일을 삭제하는 오류)
+    
 # main 함수에서 result.json 파일을 읽어와서 처리
-def main():
-    # 현재 스크립트의 위치를 가져옵니다.
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # 현재 스크립트의 위치를 기반으로 파일 경로를 재설정합니다.
-    file_path = os.path.join(current_dir, '../yolo/yolov5/yolov5/result.json')
-
-    if not os.path.exists(file_path):
-        print(f"Error: {file_path} 파일을 찾을 수 없습니다.")
-
-    with open(file_path, 'r') as f:
-        # 파일 처리 코드
-        results = json.load(f)
-    
-    # 가장 확률이 높은 제품을 찾기
-    if not results:
-        print("result.json 파일에 제품 정보가 없습니다.")
-        return
-    
-    highest_confidence_product = max(results, key=lambda x: x[1])
-    product_name, confidence = highest_confidence_product
-    
+def main(product_name):
     # 해당 제품의 정보를 음성으로 출력
-    announce_product_info(product_name, confidence)
+    announce_product_info(product_name)
 
 if __name__ == "__main__":
     main()

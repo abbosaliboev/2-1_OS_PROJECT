@@ -11,11 +11,16 @@ import sys # 경로 추가를 위해
 import time
 
 sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로 추가
+sys.path.append("./../src")
 
 import detect # yolo의 detect 모듈 추가
+import our_gTTS
 
+product = None
+# 제품명을 저장하기 위한 변수
 class MainScreen(Screen):
     def capture_image(self):
+        global product
         camera = self.ids['camera']
         timestr = time.strftime("%Y%m%d_%H%M%S")
         camera.export_to_png("photos/IMG.png".format(timestr))
@@ -29,12 +34,16 @@ class MainScreen(Screen):
         else: # 제품이 있는 경우 리스트에서 제품 이름을 갖고와 제품명 출력
             product = result[0][0] # 가장 확률이 높은 아이템을 갖고오기
             print(product)
-        
+        ##### yolo에서 제품 추론 완료
+
+        # tts 사용부분
+        our_gTTS.main(product)
         # yolo로 제품명을 갖고 오는 것까지 구현완료 tts 구현, 알리가 프론트앤드 구현해줘야 함!
         
         
 
 class SecondScreen(Screen):
+    
     def toggle_microphone(self):
         # Add logic for enabling/disabling the microphone here
         pass
