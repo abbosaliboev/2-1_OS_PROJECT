@@ -10,6 +10,12 @@ from kivy.uix.label import Label
 import sys # 경로 추가를 위해
 import time
 
+#code to import database
+import sqlite3
+from kivy.properties import StringProperty
+con=sqlite3.connect("product.db")
+cur= con.cursor()
+
 sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로 추가
 sys.path.append("./../src")
 
@@ -43,7 +49,7 @@ class MainScreen(Screen):
         
 
 class SecondScreen(Screen):
-    
+    productdata=StringProperty(result)
     def toggle_microphone(self):
         # Add logic for enabling/disabling the microphone here
         pass
