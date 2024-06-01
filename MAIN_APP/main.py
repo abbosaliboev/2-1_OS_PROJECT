@@ -12,7 +12,8 @@ import sys
 import time
 from plyer import vibrator 
 import sqlite3
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ListProperty
+
 con=sqlite3.connect("product.db")
 cur= con.cursor()
 
@@ -45,30 +46,43 @@ class MainScreen(Screen):
         # tts 사용부분
         our_gTTS.main(product_name)
         # yolo로 제품명을 갖고 오는 것까지 구현완료 tts 구현, 알리가 프론트앤드 구현해줘야 함!
-        
+
+        # Store product_name in the app instance
+        self.manager.get_screen('second').set_product_name(product_name)
         
         
 class SecondScreen(Screen):
-     
-    # 아래 코드 실행시 오류가 발생하여 일단은 주석 처리 했습니다.
-    # my.kv가 1.3 버전으로 업데이트 되어 다시 세팅이 필요합니다.
-
+    product_data=StringProperty('')
+    basket = ListProperty([])    #장바구니 리스트
+    
     #extract product data and send to .kv
-    # def __init__(self, **kwargs):
-    #     super(SecondScreen, self).__init__(**kwargs)
-    #     self.load_product_data()
+    def set_product_name(self, product_name):
+        self.load_product_data(product_name)
 
-    # def load_product_data(self):
-    #     global product_name
-    #     cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
-    #     product_data = cur.fetchone() 
-    #     self.product_data = StringProperty(str(product_data))
+    def load_product_data(self, product_name):
+        if product_name:
+            cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
+            product_data = cur.fetchone()    #데이터베이스로 부터 정보 받음
+            if product_data:
+                self.product_data = str(product_data)    #kv로 송출
+            else:    #실패사례
+                self.product_data = "Not Found"
+        else:
+            self.product_data = "No product detected."
+
+    def add_to_basket(self):
+        if product_name:
+            self.basket.append(product_name)
+            self.manager.get_screen('basket').update_basket(self.basket)
+            
     def toggle_microphone(self):
-        
         pass
 
 class BasketScreen(Screen):
-    pass
+    basket_items = ListProperty([])
+
+    def update_basket(self, items):
+        self.basket_items = items
 
 class PayScreen(Screen):
     pass
