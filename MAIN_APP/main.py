@@ -79,10 +79,12 @@ class SecondScreen(Screen):
         pass
 
 class BasketScreen(Screen):
-    basket_items = ListProperty([])
+    class BasketScreen(Screen):
+        basket_items = ListProperty([])
 
-    def update_basket(self, items):
-        self.basket_items = items
+        def update_basket(self, items):
+            self.basket_items = items
+            self.ids.main_button.text = '\n'.join(self.basket_items)
 
 class PayScreen(Screen):
     pass
