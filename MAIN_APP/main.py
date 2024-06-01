@@ -12,7 +12,8 @@ import sys
 import time
 from plyer import vibrator 
 import sqlite3
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ListProperty
+
 con=sqlite3.connect("product.db")
 cur= con.cursor()
 
@@ -52,6 +53,8 @@ class MainScreen(Screen):
         
 class SecondScreen(Screen):
     product_data=StringProperty('')
+    basket = ListProperty([])    #장바구니 리스트
+    
     #extract product data and send to .kv
     def set_product_name(self, product_name):
         self.load_product_data(product_name)
@@ -59,20 +62,27 @@ class SecondScreen(Screen):
     def load_product_data(self, product_name):
         if product_name:
             cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
-            product_data = cur.fetchone()
+            product_data = cur.fetchone()    #데이터베이스로 부터 정보 받음
             if product_data:
-                self.product_data = str(product_data)
-            else:
+                self.product_data = str(product_data)    #kv로 송출
+            else:    #실패사례
                 self.product_data = "Not Found"
         else:
             self.product_data = "No product detected."
+
+    def add_to_basket(self):
+        if product_name:
+            self.basket.append(product_name)
+            self.manager.get_screen('basket').update_basket(self.basket)
             
     def toggle_microphone(self):
-        
         pass
 
 class BasketScreen(Screen):
-    pass
+    basket_items = ListProperty([])
+
+    def update_basket(self, items):
+        self.basket_items = items
 
 class PayScreen(Screen):
     pass
