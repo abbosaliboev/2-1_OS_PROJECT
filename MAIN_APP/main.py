@@ -14,7 +14,7 @@ from plyer import vibrator
 import sqlite3
 from kivy.properties import StringProperty, ListProperty
 
-con=sqlite3.connect("product.db")
+con=sqlite3.connect("mydatabase.db")
 cur= con.cursor()
 
 sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로 추가
