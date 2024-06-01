@@ -105,7 +105,7 @@
             Button:
                 id: main_button
                 padding: 10, 20
-                text: root.product.data                             #Binds product_data to the button text(텍스트에 출력)
+                text: root.product_data if root.product_data else ''                             #Binds product_data to the button text(텍스트에 출력)
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: 1
                 text_size: self.size 
