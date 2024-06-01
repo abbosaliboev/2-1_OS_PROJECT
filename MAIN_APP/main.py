@@ -45,24 +45,28 @@ class MainScreen(Screen):
         # tts 사용부분
         our_gTTS.main(product_name)
         # yolo로 제품명을 갖고 오는 것까지 구현완료 tts 구현, 알리가 프론트앤드 구현해줘야 함!
+
+        # Store product_name in the app instance
+        self.manager.get_screen('second').set_product_name(product_name)
         
         
         
 class SecondScreen(Screen):
     product_data=StringProperty('')
     #extract product data and send to .kv
-    def __init__(self, **kwargs):
-        super(SecondScreen, self).__init__(**kwargs)
+    def set_product_name(self, product_name):
         self.load_product_data(product_name)
 
     def load_product_data(self, product_name):
-        global product_name
-        cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
-        product_data = cur.fetchone()
-        if product data:
-            self.product_data = str(product_data)
+        if product_name:
+            cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
+            product_data = cur.fetchone()
+            if product_data:
+                self.product_data = str(product_data)
+            else:
+                self.product_data = "Not Found"
         else:
-            self.product_data = "Not Found"
+            self.product_data = "No product detected."
     # 아래 코드 실행시 오류가 발생하여 일단은 주석 처리 했습니다.
     # my.kv가 1.3 버전으로 업데이트 되어 다시 세팅이 필요합니다.
 
