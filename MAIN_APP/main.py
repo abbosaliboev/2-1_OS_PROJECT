@@ -67,19 +67,6 @@ class SecondScreen(Screen):
                 self.product_data = "Not Found"
         else:
             self.product_data = "No product detected."
-    # 아래 코드 실행시 오류가 발생하여 일단은 주석 처리 했습니다.
-    # my.kv가 1.3 버전으로 업데이트 되어 다시 세팅이 필요합니다.
-
-    #extract product data and send to .kv
-    # def __init__(self, **kwargs):
-    #     super(SecondScreen, self).__init__(**kwargs)
-    #     self.load_product_data()
-
-    # def load_product_data(self):
-    #     global product_name
-    #     cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
-    #     product_data = cur.fetchone() 
-    #     self.product_data = StringProperty(str(product_data))
     def toggle_microphone(self):
         
         pass
