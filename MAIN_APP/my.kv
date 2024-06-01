@@ -1,5 +1,3 @@
-
-
 <MainScreen>:
     name: 'main'
     BoxLayout:
@@ -107,7 +105,7 @@
             Button:
                 id: main_button
                 padding: 10, 20
-                text: 'Product Information Product Information Product Information Product Information '
+                text: root.product.data                             #Binds product_data to the button text(텍스트에 출력)
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: 1
                 text_size: self.size 
@@ -194,7 +192,7 @@
             Button:
                 id: main_button
                 padding: 10, 10
-                text: 'Product Name Product Name Product Name Product Name'
+                text: ''
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: 1
                 text_size: self.size 
