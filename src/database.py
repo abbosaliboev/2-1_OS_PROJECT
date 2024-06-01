@@ -15,11 +15,11 @@ def initialize_database():
 
     # 데이터 삽입
     products = [
-        ("Cocacola", "코카콜라", "코카콜라", 2000, "355ml"),
-        ("Sprite", "스프라이트", "코카콜라", 1700, "355ml"),
-        ("Pepsi", "펩시 콜라", "펩시코", 1900, "355ml"),
-        ("Chilsung", "칠성 사이다", "롯데 칠성", 1600, "355ml"),
-        ("Narangd", "나랑드 사이다", "동아 오츠카", 1700, "355ml")
+        ("Cocacola", "코카콜라 캔", "코카콜라", 2000, "350ml"), 
+        ("Sprite", "스프라이트 캔", "코카콜라", 1700, "355ml"),
+        ("Pepsi", "펩시 콜라 캔", "펩시코", 2000, "355ml"),
+        ("Chilsung", "칠성 사이다 캔", "롯데 칠성", 2000, "355ml"),
+        ("Narangd", "나랑드 사이다 캔", "동아 오츠카", 1700, "345ml")
     ]
     for product in products:
         cursor.execute("INSERT INTO products (name, korean_name, brand, price, capacity) VALUES (?, ?, ?, ?, ?)", product)
