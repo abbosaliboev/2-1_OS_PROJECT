@@ -45,20 +45,27 @@ class MainScreen(Screen):
         # tts 사용부분
         our_gTTS.main(product_name)
         # yolo로 제품명을 갖고 오는 것까지 구현완료 tts 구현, 알리가 프론트앤드 구현해줘야 함!
+
+        # Store product_name in the app instance
+        self.manager.get_screen('second').set_product_name(product_name)
         
         
 
 class SecondScreen(Screen):
+    product_data=StringProperty('')
     #extract product data and send to .kv
     def __init__(self, **kwargs):
         super(SecondScreen, self).__init__(**kwargs)
-        self.load_product_data()
+        self.load_product_data(product_name)
 
-    def load_product_data(self):
+    def load_product_data(self, product_name):
         global product_name
         cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
         product_data = cur.fetchone()
-        self.product_data = StringProperty(str(product_data))
+        if product data:
+            self.product_data = str(product_data)
+        else:
+            self.product_data = "Not Found"
     
     def toggle_microphone(self):
         # Add logic for enabling/disabling the microphone here
