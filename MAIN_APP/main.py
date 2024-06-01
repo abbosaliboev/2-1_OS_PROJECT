@@ -50,7 +50,6 @@ class MainScreen(Screen):
         self.manager.get_screen('second').set_product_name(product_name)
         
         
-        
 class SecondScreen(Screen):
     product_data=StringProperty('')
     #extract product data and send to .kv
@@ -67,6 +66,7 @@ class SecondScreen(Screen):
                 self.product_data = "Not Found"
         else:
             self.product_data = "No product detected."
+            
     def toggle_microphone(self):
         
         pass
