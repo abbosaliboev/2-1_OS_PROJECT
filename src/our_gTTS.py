@@ -1,4 +1,3 @@
-import json
 import os
 from gtts import gTTS
 import pygame
@@ -11,7 +10,7 @@ def announce_product_info(product_name):
     product_info = get_product_info(product_name)
 
     if product_info is not None:
-        id, name, korean_name, brand, price, capacity = product_info
+        id, name, korean_name, brand, price, capacity, calories = product_info
         tts_text = f"해당 제품은 {korean_name} {capacity}입니다. 제조사는 {brand}입니다. 편의점 가격은 {price}원입니다."
     else:
         tts_text = "죄송합니다. 현재 해당 제품은 등록되어 있지 않습니다."
