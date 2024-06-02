@@ -61,7 +61,7 @@ class SecondScreen(Screen):
 
     def load_product_data(self, product_name):
         if product_name:
-            cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
+            cur.execute("SELECT * FROM products WHERE name = ?", (product_name,))
             product_data = cur.fetchone()    #데이터베이스로 부터 정보 받음
             if product_data:
                 self.product_data = str(product_data)    #kv로 송출
