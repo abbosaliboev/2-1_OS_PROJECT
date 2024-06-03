@@ -14,7 +14,7 @@ from plyer import vibrator
 import sqlite3
 from kivy.properties import StringProperty, ListProperty
 
-con=sqlite3.connect("product.db")
+con=sqlite3.connect("mydatabase.db")
 cur= con.cursor()
 
 sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로 추가
@@ -61,7 +61,7 @@ class SecondScreen(Screen):
 
     def load_product_data(self, product_name):
         if product_name:
-            cur.execute("SELECT * FROM product WHERE name = ?", (product_name,))
+            cur.execute("SELECT * FROM products WHERE name = ?", (product_name,))
             product_data = cur.fetchone()    #데이터베이스로 부터 정보 받음
             if product_data:
                 self.product_data = str(product_data)    #kv로 송출
@@ -79,10 +79,12 @@ class SecondScreen(Screen):
         pass
 
 class BasketScreen(Screen):
-    basket_items = ListProperty([])
+    class BasketScreen(Screen):
+        basket_items = ListProperty([])
 
-    def update_basket(self, items):
-        self.basket_items = items
+        def update_basket(self, items):
+            self.basket_items = items
+            self.ids.main_button.text = '\n'.join(self.basket_items)
 
 class PayScreen(Screen):
     pass
