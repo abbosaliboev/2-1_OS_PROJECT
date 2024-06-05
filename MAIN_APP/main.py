@@ -1,5 +1,3 @@
-# update 
-
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
@@ -8,11 +6,16 @@ from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.label import Label
+from kivy.core.text import LabelBase, DEFAULT_FONT
+from kivy.resources import resource_add_path
 import sys
 import time
 from plyer import vibrator 
 import sqlite3
 from kivy.properties import StringProperty, ListProperty
+
+# 한국어의 정상적인 출력을 위해서 기본 폰트를 'NanumGothicBold.ttf'로 설정함.
+LabelBase.register(DEFAULT_FONT, 'NanumGothicBold.ttf')
 
 con=sqlite3.connect("mydatabase.db")
 cur= con.cursor()
@@ -21,7 +24,7 @@ sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로
 sys.path.append("./../src")
 
 import detect # yolo의 detect 모듈 추가
-import our_gTTS   #
+import our_gTTS #
 
 product_name = None # 제품명을 저장하기 위한 변수
 
@@ -65,7 +68,7 @@ class SecondScreen(Screen):
             cur.execute("SELECT * FROM products WHERE name = ?", (product_name,))
             product_data = cur.fetchone()    #데이터베이스로 부터 정보 받음
             if product_data:
-                self.product_data = str(product_data)    #kv로 송출
+                self.product_data = str(product_data)  #kv로 송출
             else:    #실패사례
                 self.product_data = "Not Found"
         else:
