@@ -14,6 +14,7 @@ from plyer import vibrator
 import sqlite3
 from kivy.properties import StringProperty, ListProperty, NumericProperty
 
+# Establish connection to the SQLite database
 con=sqlite3.connect("mydatabase.db")
 cur= con.cursor()
 
@@ -21,13 +22,15 @@ sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로
 sys.path.append("./../src")
 
 import detect # yolo의 detect 모듈 추가
-import our_gTTS   #
+import our_gTTS   # 텍스트를 음성으로 변환하는 our_gTTS 모듈 임포트
 
 product_name = None # 제품명을 저장하기 위한 변수
 
+
+
 class MainScreen(Screen):
     def capture_image(self):
-        global product_name
+        global product_name    #전역변수 사용
         camera = self.ids['camera']
         timestr = time.strftime("%Y%m%d_%H%M%S")
         camera.export_to_png("photos/IMG.png".format(timestr))
@@ -72,26 +75,31 @@ class SecondScreen(Screen):
             self.product_data = "No product detected."
 
     def add_to_basket(self):
-        cur.execute("SELECT price FROM products WHERE name = ?", (product_name,))
+        global product_name_global  # Use global variable to get product name
+        if product_name_global:
+            # Query the database for the product price
+            cur.execute("SELECT price FROM products WHERE name = ?", (product_name_global,))
             price = cur.fetchone()[0]
+           
         if product_name:
-            self.basket.append(product_name)
-            self.manager.get_screen('basket').update_basket(self.basket)
+            
+            self.basket.append((product_name_global, price))  # Add product to basket
+            self.manager.get_screen('basket').update_basket(self.basket)  # Update basket screen
             
     def toggle_microphone(self):
         pass
 
 class BasketScreen(Screen):
-    basket_items = ListProperty([])
-    total_price = NumericProperty(0)
+    basket_items = ListProperty([])            # List property to hold basket items
+    total_price = NumericProperty(0)            # Property to hold total price
 
     def update_basket(self, items):
-        self.basket_items = items
-        self.ids.main_button.text = '\n'.join(self.basket_items)
-        #add total price and print
-        self.total_price = sum([item[1] for item in items])
-        self.ids.main_button.text = '\n'.join([item[0] for item in self.basket_items])
-        self.ids.price_label.text = f"Total Price: ${self.total_price:.2f}"
+        def update_basket(self, items):
+        self.basket_items = items  # Update basket items
+        self.total_price = sum([item[1] for item in items])  # Calculate total price
+        # Update the button text to show product names and prices
+        self.ids.main_button.text = '\n'.join([f"{item[0]}: ${item[1]:.2f}" for item in self.basket_items])
+        self.ids.price_label.text = f"Total Price: ${self.total_price:.2f}"  # Update total price label
 
 class PayScreen(Screen):
     pass
