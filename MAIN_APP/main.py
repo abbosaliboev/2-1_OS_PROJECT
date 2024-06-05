@@ -21,7 +21,7 @@ sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로
 sys.path.append("./../src")
 
 import detect # yolo의 detect 모듈 추가
-import our_gTTS
+import our_gTTS   #
 
 product_name = None # 제품명을 저장하기 위한 변수
 
