@@ -7,7 +7,6 @@ from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.core.text import LabelBase, DEFAULT_FONT
-from kivy.resources import resource_add_path
 import sys
 import time
 from plyer import vibrator 
