@@ -12,7 +12,7 @@ import sys
 import time
 from plyer import vibrator 
 import sqlite3
-from kivy.properties import StringProperty, ListProperty
+from kivy.properties import StringProperty, ListProperty, NumericProperty
 
 con=sqlite3.connect("mydatabase.db")
 cur= con.cursor()
@@ -21,7 +21,7 @@ sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로
 sys.path.append("./../src")
 
 import detect # yolo의 detect 모듈 추가
-import our_gTTS
+import our_gTTS   #
 
 product_name = None # 제품명을 저장하기 위한 변수
 
@@ -54,6 +54,7 @@ class MainScreen(Screen):
 class SecondScreen(Screen):
     product_data=StringProperty('')
     basket = ListProperty([])    #장바구니 리스트
+    price = NumericProperty(0)
     
     #extract product data and send to .kv
     def set_product_name(self, product_name):
@@ -71,6 +72,8 @@ class SecondScreen(Screen):
             self.product_data = "No product detected."
 
     def add_to_basket(self):
+        cur.execute("SELECT price FROM products WHERE name = ?", (product_name,))
+            price = cur.fetchone()[0]
         if product_name:
             self.basket.append(product_name)
             self.manager.get_screen('basket').update_basket(self.basket)
@@ -79,12 +82,16 @@ class SecondScreen(Screen):
         pass
 
 class BasketScreen(Screen):
-    class BasketScreen(Screen):
-        basket_items = ListProperty([])
+    basket_items = ListProperty([])
+    total_price = NumericProperty(0)
 
-        def update_basket(self, items):
-            self.basket_items = items
-            self.ids.main_button.text = '\n'.join(self.basket_items)
+    def update_basket(self, items):
+        self.basket_items = items
+        self.ids.main_button.text = '\n'.join(self.basket_items)
+        #add total price and print
+        self.total_price = sum([item[1] for item in items])
+        self.ids.main_button.text = '\n'.join([item[0] for item in self.basket_items])
+        self.ids.price_label.text = f"Total Price: ${self.total_price:.2f}"
 
 class PayScreen(Screen):
     pass
