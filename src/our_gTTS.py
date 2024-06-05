@@ -4,18 +4,12 @@ import pygame
 import pygame.examples
 from database import get_product_info
 
-
-def load_product_data(product_name):
-    # 제품 정보를 데이터베이스에서 가져옵니다.
-    product_info = get_product_info(product_name)
-    return product_info
-
 #제품 정보를 음성으로 출력하는 함수
 def announce_product_info(product_name, basket=None):
     
     if basket is None:
         # 제품 이름을 사용하여 제품 정보를 로드합니다.
-        product_info = load_product_data(product_name)
+        product_info = get_product_info(product_name)
         if product_info is not None:
             id, name, korean_name, brand, price, capacity, calories = product_info
             # 제품 정보를 한국어로 출력합니다.
@@ -27,7 +21,7 @@ def announce_product_info(product_name, basket=None):
         total_price = 0
         product_names = []
         for product in basket:
-            product_info = load_product_data(product)
+            product_info = get_product_info(product)
             if product_info is not None:
                 id, name, korean_name, brand, price, capacity, calories = product_info
                 total_price += price
