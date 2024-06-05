@@ -13,6 +13,7 @@ import time
 from plyer import vibrator 
 import sqlite3
 from kivy.properties import StringProperty, ListProperty, NumericProperty
+from kivy.uix.gridlayout import GridLayout
 
 # Establish connection to the SQLite database
 con=sqlite3.connect("mydatabase.db")
@@ -94,12 +95,14 @@ class BasketScreen(Screen):
     total_price = NumericProperty(0)            # Property to hold total price
 
     def update_basket(self, items):
-        def update_basket(self, items):
         self.basket_items = items  # Update basket items
         self.total_price = sum([item[1] for item in items])  # Calculate total price
-        # Update the button text to show product names and prices
-        self.ids.main_button.text = '\n'.join([f"{item[0]}: ${item[1]:.2f}" for item in self.basket_items])
-        self.ids.price_label.text = f"Total Price: ${self.total_price:.2f}"  # Update total price label
+        self.ids.basket_grid.clear_widgets()  # Clear existing widgets
+        for item in self.basket_items:
+            label = Label(text=f"{item[0]}: ${item[1]:.2f}", size_hint_y=None, height=40)
+            self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
+        # Update the total price label
+        self.ids.price_label.text = f"Total Price: ${self.total_price:.2f}" 
 
 class PayScreen(Screen):
     pass
