@@ -46,12 +46,13 @@ class MainScreen(Screen):
         # tts 사용부분
         our_gTTS.main(product_name)
         # yolo로 제품명을 갖고 오는 것까지 구현완료 tts 구현, 알리가 프론트앤드 구현해줘야 함!
-
+    
         # Store product_name in the app instance
         self.manager.get_screen('second').set_product_name(product_name)
         
         
 class SecondScreen(Screen):
+    
     product_data=StringProperty('')
     basket = ListProperty([])    #장바구니 리스트
     
