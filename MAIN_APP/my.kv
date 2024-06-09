@@ -155,7 +155,8 @@
                 size_hint: None, None
                 size: 200, 200
                 background_normal: ''
-                background_color: (48/255, 84/255, 150/255, 0)  
+                background_color: (48/255, 84/255, 150/255, 0)
+                on_press: root.add_to_basket()
                 on_press: app.root.current = 'basket'
                 canvas.before:
                     Color:
