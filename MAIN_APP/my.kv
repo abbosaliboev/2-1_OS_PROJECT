@@ -171,57 +171,21 @@
 
 <BasketScreen>:
     name: 'basket'
-    BoxLayout:
+    BoxLayout:   # 바탕 정보
         orientation: 'vertical'
         padding: 60, 20
-        spacing: 10
+        spacing: 0
+        canvas.before:
+            Color:
+                rgba: 150/255, 150/255, 150/255, 1   
+            Rectangle:
+                size: self.size
+                pos: self.pos
 
-        ScrollView:  # Add a ScrollView to enable scrolling
-            GridLayout:  # Use GridLayout to organize the widgets
-                id: basket_grid
-                cols: 1
-                size_hint_y: None
-                height: self.minimum_height  # Set the height based on the content
-                spacing: 10
-
-                Label:
-                    text: 'Product Names'
-                    size_hint_y: None
-                    height: 40
-                    font_size: 18
-                    bold: True
-                    halign: 'center'
-                    valign: 'middle'
-
-                # Add labels dynamically for each product in the basket
-                # Use a for loop to iterate over the basket_items list
-                # Each item in basket_items is a tuple containing product name and price
-                # Create a label for each product name and add it to the GridLayout
-                # Use string formatting to display product name and price together
-                # Iterate over root.basket_items to access each item in the basket
-                # Set the text of the label to the product name and price
-                # Use font_size, bold, halign, valign properties to style the label
-                Label:
-                    text: '\n'.join([f"{item[0]}: ${item[1]:.2f}" for item in root.basket_items])
-                    size_hint_y: None
-                    height: self.texture_size[1]
-                    font_size: 16
-                    bold: False
-                    halign: 'left'
-                    valign: 'middle'
-
-        Label:
-            id: price_label  # Display the total price
-            text: "Total Price: $" + str(root.total_price)
-            size_hint_y: None
-            height: 40
-            font_size: 18
-            bold: True
-            halign: 'center'
-            valign: 'middle'
-
-        # Main Button: Takes user back to the main screen
         BoxLayout:
+            size_hint_y: 0.1 
+
+        BoxLayout:   # 중앙정보
             size_hint_y: None 
             pos_hint: {'center_x': 0.5}
             height: '270dp'           
@@ -229,7 +193,7 @@
             Button:
                 id: main_button
                 padding: 10, 10
-                text: ''
+                text: root.total_price_text
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: 1
                 text_size: self.size 
@@ -237,9 +201,9 @@
                 background_color: (48/255, 84/255, 150/255, 0)                                 
                 halign: 'center'
                 valign: 'middle'
-                on_press: app.root.current = 'main'  # Navigate to the main screen when pressed
+                on_press: app.root.current = 'main'
                 canvas.before:
-                    Color:                        
+                    Color:       # 중앙버튼                 
                         rgba: 60/255, 165/255, 113/255, 1  
                     RoundedRectangle:
                         size: self.size
@@ -249,7 +213,6 @@
         BoxLayout:
             size_hint_y: 0.1  
 
-        # Back Button: Takes user to the payment screen
         BoxLayout:
             size_hint_y: None
             height: '100dp'  
@@ -262,7 +225,7 @@
                 size: 560, 200
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
-                on_press: app.root.current = 'pay'  # Navigate to the payment screen when pressed
+                on_press: app.root.current = 'pay'
                 canvas.before:
                     Color:
                         rgba: 0, 0, 0, 1
@@ -280,14 +243,13 @@
             height: '100dp'  
             pos_hint: {'center_x': 0.52}
             spacing: 50
-            # Back Button: Takes user back to the main screen
             Button:
                 id: back_button
                 size_hint: None, None
                 size: 250, 200
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
-                on_press: app.root.current = 'main'  # Navigate to the main screen when pressed
+                on_press: app.root.current = 'main'
                 canvas.before:
                     Color:
                         rgba: 0, 0, 0, 1
@@ -300,14 +262,13 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
 
-            # Basket Button: Performs an action related to the basket (e.g., clear items)
             Button:
-                id: basket_button
+                id: bsket_button
                 size_hint: None, None
                 size: 270, 200
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
-                on_press: app.root.current = 'main'  # Perform an action related to the basket when pressed
+                on_press: app.root.current = 'main'
                 canvas.before:
                     Color:
                         rgba: 0, 0, 0, 1
@@ -318,7 +279,7 @@
                 Image:
                     source: 'png_files/button_trash.png'  
                     center_x: self.parent.center_x
-                    center_y: self.parent.center_y 
+                    center_y: self.parent.center_y
 
 
 <PayScreen>:
