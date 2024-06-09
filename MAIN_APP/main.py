@@ -11,7 +11,9 @@ import sys
 import time
 from plyer import vibrator 
 import sqlite3
-from kivy.properties import StringProperty, ListProperty
+from kivy.properties import StringProperty, ListProperty, NumericProperty
+from kivy.uix.gridlayout import GridLayout
+
 
 # 한국어의 정상적인 출력을 위해서 기본 폰트를 'NanumGothicBold.ttf'로 설정함.
 LabelBase.register(DEFAULT_FONT, 'NanumGothicBold.ttf')
@@ -23,13 +25,16 @@ sys.path.append("./../yolo/yolov5/yolov5") # yolo 모델 사용을 위한 경로
 sys.path.append("./../src")
 
 import detect # yolo의 detect 모듈 추가
-import our_gTTS #
+import our_gTTS   # 텍스트를 음성으로 변환하는 our_gTTS 모듈 임포트
+
 
 product_name = None # 제품명을 저장하기 위한 변수
 
+
+
 class MainScreen(Screen):
     def capture_image(self):
-        global product_name
+        global product_name    #전역변수 사용
         camera = self.ids['camera']
         timestr = time.strftime("%Y%m%d_%H%M%S")
         camera.export_to_png("photos/IMG.png".format(timestr))
@@ -57,6 +62,7 @@ class SecondScreen(Screen):
     
     product_data=StringProperty('')
     basket = ListProperty([])    #장바구니 리스트
+    price = NumericProperty(0)
     
     #extract product data and send to .kv
     def set_product_name(self, product_name):
@@ -74,20 +80,33 @@ class SecondScreen(Screen):
             self.product_data = "No product detected."
 
     def add_to_basket(self):
+        global product_name_global  # Use global variable to get product name
+        if product_name_global:
+            # Query the database for the product price
+            cur.execute("SELECT price FROM products WHERE name = ?", (product_name_global,))
+            price = cur.fetchone()[0]
+           
         if product_name:
-            self.basket.append(product_name)
-            self.manager.get_screen('basket').update_basket(self.basket)
+            
+            self.basket.append((product_name_global, price))  # Add product to basket
+            self.manager.get_screen('basket').update_basket(self.basket)  # Update basket screen
             
     def toggle_microphone(self):
         pass
 
 class BasketScreen(Screen):
-    class BasketScreen(Screen):
-        basket_items = ListProperty([])
+    basket_items = ListProperty([])            # List property to hold basket items
+    total_price = NumericProperty(0)            # Property to hold total price
 
-        def update_basket(self, items):
-            self.basket_items = items
-            self.ids.main_button.text = '\n'.join(self.basket_items)
+    def update_basket(self, items):
+        self.basket_items = items  # Update basket items
+        self.total_price = sum([item[1] for item in items])  # Calculate total price
+        self.ids.basket_grid.clear_widgets()  # Clear existing widgets
+        for item in self.basket_items:
+            label = Label(text=f"{item[0]}: ${item[1]:.2f}", size_hint_y=None, height=40)
+            self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
+        # Update the total price label
+        self.ids.price_label.text = f"Total Price: ${self.total_price:.2f}" 
 
 class PayScreen(Screen):
     pass
