@@ -73,7 +73,12 @@ class SecondScreen(Screen):
             cur.execute("SELECT * FROM products WHERE name = ?", (product_name,))
             product_data = cur.fetchone()    #데이터베이스로 부터 정보 받음
             if product_data:
-                self.product_data = str(product_data)  #kv로 송출
+                self.product_name = str(product_data[3])  #kv로 송출
+                self.product_brand = str(product_data[2])
+                self.product_price = str(product_data[4])
+                self.product_capacity = str(product_data[5])
+                self.product_calorie = str(product_data[6])
+                self.product_data = f"이름: {self.product_name}\n {self.product_brand}\n가격: {self.product_price}\n용량: {self.product_capacity}\n칼로리: {self.product_calorie}"
             else:    #실패사례
                 self.product_data = "Not Found"
         else:
