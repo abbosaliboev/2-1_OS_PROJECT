@@ -1,5 +1,3 @@
-# update 
-
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
@@ -8,6 +6,7 @@ from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.label import Label
+from kivy.core.text import LabelBase, DEFAULT_FONT
 import sys
 import time
 from plyer import vibrator 
@@ -15,7 +14,10 @@ import sqlite3
 from kivy.properties import StringProperty, ListProperty, NumericProperty
 from kivy.uix.gridlayout import GridLayout
 
-# Establish connection to the SQLite database
+
+# 한국어의 정상적인 출력을 위해서 기본 폰트를 'NanumGothicBold.ttf'로 설정함.
+LabelBase.register(DEFAULT_FONT, 'NanumGothicBold.ttf')
+
 con=sqlite3.connect("mydatabase.db")
 cur= con.cursor()
 
@@ -24,6 +26,7 @@ sys.path.append("./../src")
 
 import detect # yolo의 detect 모듈 추가
 import our_gTTS   # 텍스트를 음성으로 변환하는 our_gTTS 모듈 임포트
+
 
 product_name = None # 제품명을 저장하기 위한 변수
 
@@ -50,12 +53,13 @@ class MainScreen(Screen):
         # tts 사용부분
         our_gTTS.main(product_name)
         # yolo로 제품명을 갖고 오는 것까지 구현완료 tts 구현, 알리가 프론트앤드 구현해줘야 함!
-
+    
         # Store product_name in the app instance
         self.manager.get_screen('second').set_product_name(product_name)
         
         
 class SecondScreen(Screen):
+    
     product_data=StringProperty('')
     basket = ListProperty([])    #장바구니 리스트
     price = NumericProperty(0)
@@ -69,7 +73,7 @@ class SecondScreen(Screen):
             cur.execute("SELECT * FROM products WHERE name = ?", (product_name,))
             product_data = cur.fetchone()    #데이터베이스로 부터 정보 받음
             if product_data:
-                self.product_data = str(product_data)    #kv로 송출
+                self.product_data = str(product_data)  #kv로 송출
             else:    #실패사례
                 self.product_data = "Not Found"
         else:
