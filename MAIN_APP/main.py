@@ -73,7 +73,13 @@ class SecondScreen(Screen):
             cur.execute("SELECT * FROM products WHERE name = ?", (product_name,))
             product_data = cur.fetchone()    #데이터베이스로 부터 정보 받음
             if product_data:
-                self.product_data = str(product_data)  #kv로 송출
+                self.product_name = str(product_data[3])  #kv로 송출
+                self.product_brand = str(product_data[2])
+                self.product_price = str(product_data[4])
+                self.product_capacity = str(product_data[5])
+                self.product_calorie = str(product_data[6])
+                self.product_data = f"이름: {self.product_name}\n {self.product_brand}\n가격: {self.product_price}\n용량: {self.product_capacity}\n칼로리: {self.product_calorie}"
+
             else:    #실패사례
                 self.product_data = "Not Found"
         else:
@@ -82,12 +88,8 @@ class SecondScreen(Screen):
     def add_to_basket(self):
         global product_name_global  # Use global variable to get product name
         if product_name_global:
-            # Query the database for the product price
             cur.execute("SELECT price FROM products WHERE name = ?", (product_name_global,))
             price = cur.fetchone()[0]
-           
-        if product_name:
-            
             self.basket.append((product_name_global, price))  # Add product to basket
             self.manager.get_screen('basket').update_basket(self.basket)  # Update basket screen
             
