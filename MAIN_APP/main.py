@@ -60,8 +60,6 @@ class MainScreen(Screen):
         
         
 class SecondScreen(Screen):
-    
-
     product_data=StringProperty('')
     basket = ListProperty([])    #장바구니 리스트
     price = NumericProperty(0)
