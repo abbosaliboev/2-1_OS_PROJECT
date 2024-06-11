@@ -80,7 +80,7 @@ class SecondScreen(Screen):
                 self.product_price = str(product_data[4])
                 self.product_capacity = str(product_data[5])
                 self.product_calorie = str(product_data[6])
-                self.product_data = f"이름: {self.product_name}\n {self.product_brand}\n\n가격: {self.product_price}\n\n용량: {self.product_capacity}\n\n칼로리: {self.product_calorie}"
+                self.product_data = f"이름: {self.product_name}\n\n {self.product_brand}\n\n가격: {self.product_price}\n\n용량: {self.product_capacity}\n\n칼로리: {self.product_calorie}"
 
             else:    #실패사례
                 self.product_data = "Not Found"
