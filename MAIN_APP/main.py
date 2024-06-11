@@ -113,7 +113,8 @@ class BasketScreen(Screen):
             label = Label(text=f"{item[0]}: ${item[1]:.2f}", size_hint_y=None, height=40)
             self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
         # Update the total price label
-        self.ids.price_label.text = f"Total Price: ${self.total_price:.2f}"
+        self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + \
+                                "\n".join([f"{item[0]}: ${item[1]:.2f}" for item in items])
 
 class PayScreen(Screen):
     pass
