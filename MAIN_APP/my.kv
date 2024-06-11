@@ -188,6 +188,7 @@
             size_hint_y: 0.1 
 
         BoxLayout:   # 중앙정보
+            orientation: 'vertical'
             size_hint_y: None 
             pos_hint: {'center_x': 0.5}
             height: '270dp'           
@@ -210,7 +211,15 @@
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
-                        radius: [18, 18, 18, 18]  
+                        radius: [18, 18, 18, 18]
+                        
+            ScrollView:
+                size_hint: 1, 1
+                GridLayout:
+                    id: basket_grid
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
 
         BoxLayout:
             size_hint_y: 0.1  

@@ -88,11 +88,11 @@ class SecondScreen(Screen):
             self.product_data = "No product detected."
 
     def add_to_basket(self):
-        global product_name_global  # Use global variable to get product name
-        if product_name_global:
-            cur.execute("SELECT price FROM products WHERE name = ?", (product_name_global,))
+        global product_name  # Use global variable to get product name
+        if product_name:
+            cur.execute("SELECT price FROM products WHERE name = ?", (product_name,))
             price = cur.fetchone()[0]
-            self.basket.append((product_name_global, price))  # Add product to basket
+            self.basket.append((product_name, price))  # Add product to basket
             self.manager.get_screen('basket').update_basket(self.basket)  # Update basket screen
             
     def toggle_microphone(self):
