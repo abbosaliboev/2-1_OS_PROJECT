@@ -123,15 +123,17 @@ class BasketScreen(Screen):
             self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
 
         # Update the total price label
-        self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + \
-                                "\n".join([f"{product_name}: ${info['price']:.2f} x {info['count']}" for product_name, info in self.item_counts.items()])
+        self.total_price_text = f"Total Price: ${self.total_price:.2f}\n"
+        #self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + \
+        #                        "\n".join([f"{product_name}: ${info['price']:.2f} x {info['count']}" for product_name, info in self.item_counts.items()])
         
     # Method to clear basket and reset total price
     def reset_basket(self):
         self.basket_items = []
         self.total_price = 0
         self.total_price_text = "Total Price: $0.00"
-        self.ids.basket_grid.clear_widgets()
+        self.item_counts = {}  # Reset item counts
+        self.ids.basket_grid.clear_widgets()  # Clear existing widgets
 
 class PayScreen(Screen):
     pass
