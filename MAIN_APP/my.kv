@@ -6,15 +6,16 @@
         spacing: 0
         canvas.before:
             Color:
-                rgba: 150/255, 150/255, 150/255, 1  
-            Rectangle:
+                rgba: 238/255, 245/255, 255/255, 1 #whiteblue
+            Rectangle
                 size: self.size
                 pos: self.pos
 
         BoxLayout:
             size_hint_y: None
-            height: '32dp'
+            height: '36dp'
             spacing: 230
+            padding: 0, -20
             pos_hint: {'center_x': 0.5}
 
             Button:
@@ -66,12 +67,12 @@
                 size_hint: None, None
                 size: 200, 200
                 background_normal: ''
-                background_color: (60/255, 60/255, 60/255, 0)  
+                background_color: (48/255, 84/255, 150/255, 0)   
                 on_press: root.capture_image()
                 on_press: app.root.current = 'second'
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba:  23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -89,7 +90,7 @@
         spacing: 0
         canvas.before:
             Color:
-                rgba: 150/255, 150/255, 150/255, 1   
+                rgba: 238/255, 245/255, 255/255, 1  
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -117,7 +118,7 @@
                 on_press: app.root.current = 'main'
                 canvas.before:
                     Color:                        
-                        rgba: 60/255, 165/255, 113/255, 1  
+                        rgba: 134/255, 182/255, 246/255, 1 
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
@@ -140,7 +141,7 @@
                 on_press: app.root.current = 'main'
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba:  23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -160,7 +161,7 @@
                 on_press: app.root.current = 'basket'
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba: 23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -178,7 +179,7 @@
         spacing: 0
         canvas.before:
             Color:
-                rgba: 150/255, 150/255, 150/255, 1   
+                rgba: 238/255, 245/255, 255/255, 1 
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -187,6 +188,7 @@
             size_hint_y: 0.1 
 
         BoxLayout:   # 중앙정보
+            orientation: 'vertical'
             size_hint_y: None 
             pos_hint: {'center_x': 0.5}
             height: '270dp'           
@@ -205,11 +207,19 @@
                 on_press: app.root.current = 'main'
                 canvas.before:
                     Color:       # 중앙버튼                 
-                        rgba: 60/255, 165/255, 113/255, 1  
+                        rgba: 134/255, 182/255, 246/255, 1   
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
-                        radius: [18, 18, 18, 18]  
+                        radius: [18, 18, 18, 18]
+                        
+            ScrollView:
+                size_hint: 1, 1
+                GridLayout:
+                    id: basket_grid
+                    cols: 1
+                    size_hint_y: None
+                    height: self.minimum_height
 
         BoxLayout:
             size_hint_y: 0.1  
@@ -229,7 +239,7 @@
                 on_press: app.root.current = 'pay'
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba:  23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -253,7 +263,7 @@
                 on_press: app.root.current = 'main'
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba:  23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -272,7 +282,7 @@
                 on_press: app.root.current = 'main'
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba: 23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -291,7 +301,7 @@
         spacing: 0
         canvas.before:
             Color:
-                rgba: 150/255, 150/255, 150/255, 1   
+                rgba: 238/255, 245/255, 255/255, 1  
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -341,7 +351,7 @@
                 on_press: app.root.current = 'main'
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba: 23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -360,7 +370,7 @@
                 on_press: root.toggle_microphone()
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba: 23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -383,7 +393,7 @@
         spacing: 0
         canvas.before:
             Color:
-                rgba: 150/255, 150/255, 150/255, 1   
+                rgba: 238/255, 245/255, 255/255, 1
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -392,10 +402,14 @@
             size_hint_y: 0.1 
 
         BoxLayout:
-            size_hint_y: 1  
+            size_hint_y: 1
+            size_hint_y: None 
+            pos_hint: {'center_x': 0.5}
+            height: '520dp'           
+            spacing: 50  
             canvas.before:
                 Color:
-                    rgba: 226/255, 223/255, 208/255, 1  
+                    rgba: 134/255, 182/255, 246/255, 1   
                 RoundedRectangle:
                     size: self.size
                     pos: self.pos
@@ -427,7 +441,7 @@
                 on_press: app.root.current = 'main'
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba: 23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -446,7 +460,7 @@
                 on_press: root.toggle_microphone()
                 canvas.before:
                     Color:
-                        rgba: 0, 0, 0, 1
+                        rgba: 23/255, 107/255, 135/255, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
