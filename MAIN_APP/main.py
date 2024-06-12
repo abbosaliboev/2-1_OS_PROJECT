@@ -15,7 +15,6 @@ import sqlite3
 from kivy.properties import StringProperty, ListProperty, NumericProperty
 from kivy.uix.gridlayout import GridLayout
 
-
 # 한국어의 정상적인 출력을 위해서 기본 폰트를 'NanumGothicBold.ttf'로 설정함.
 LabelBase.register(DEFAULT_FONT, 'NanumGothicBold.ttf')
 

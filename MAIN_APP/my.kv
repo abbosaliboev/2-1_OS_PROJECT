@@ -205,6 +205,8 @@
                 background_color: (48/255, 84/255, 150/255, 0)                                 
                 halign: 'center'
                 valign: 'middle'
+                font_size: 20
+                font_name: 'NanumGothicBold.ttf'  # 한글을 지원하는 폰트를 추가함.
                 on_press: app.root.current = 'main'
                 canvas.before:
                     Color:       # 중앙버튼                 
@@ -221,6 +223,11 @@
                     cols: 1
                     size_hint_y: None
                     height: self.minimum_height
+                    Label:
+                        text: "Sample text"  # Misol matn
+                        font_size: 20  # Shrift o'lchami
+                        color: 0, 0, 0, 1  # Qora rang
+
 
         BoxLayout:
             size_hint_y: 0.1  
@@ -419,11 +426,14 @@
             Label:
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: None
-                text_size: self.size  
+                text_size: self.size 
+                font_size: '24sp'
+                font_name: 'NanumGothicBold.ttf' 
                 halign: 'center'
                 valign: 'middle'
-                text: "Setting Setting Setting Setting Setting Setting Setting Setting"
-                color: 0, 0, 0, 1
+                text: "Setting Setting Setting"
+                color: 1, 1, 1, 1
+
 
         BoxLayout:
             size_hint_y: 0.1 
