@@ -104,15 +104,15 @@ class BasketScreen(Screen):
     def update_basket(self, items):
         self.basket_items = items  # Update basket items
         self.total_price = sum([item[1] for item in items])  # Calculate total price
-        self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + "\n".join([f"{item[0]}: ${item[1]:.2f}" for item in items])  # Update text property
+        self.total_price_text = f"Total Price: {self.total_price:.2f} won\nItems:\n" + "\n".join([f"{item[0]}: won {item[1]:.2f}" for item in items])  # Update text property
         
         self.ids.basket_grid.clear_widgets()  # Clear existing widgets
         for item in self.basket_items:
-            label = Label(text=f"{item[0]}: ${item[1]:.2f}", size_hint_y=None, height=40)
+            label = Label(text=f"{item[0]}: {item[1]:.2f} won", size_hint_y=None, height=40)
             self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
         # Update the total price label
-        self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + \
-                                "\n".join([f"{item[0]}: ${item[1]:.2f}" for item in items])
+        self.total_price_text = f"Total Price: {self.total_price:.2f} won\nItems:\n" + \
+                                "\n".join([f"{item[0]}: {item[1]:.2f} won" for item in items])
 
 class PayScreen(Screen):
     pass
