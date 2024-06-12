@@ -95,17 +95,15 @@ class SecondScreen(Screen):
 
     def toggle_microphone(self):
         pass
-
 class BasketScreen(Screen):
-    # Properties to hold basket items and total price
+    # 바구니 아이템과 총 가격을 저장하는 속성들
     basket_items = ListProperty([])
     total_price = NumericProperty(0)
     total_price_text = StringProperty("")
-    item_counts = {}  # Dictionary to hold item counts
+    item_counts = {}  # 아이템 개수를 저장할 딕셔너리
 
-    # Method to update basket items and total price
     def update_basket(self, items):
-        self.item_counts = {}  # Reset item counts
+        self.item_counts = {}  # 아이템 개수를 초기화
         for item in items:
             product_name, price = item
             if product_name in self.item_counts:
@@ -113,27 +111,25 @@ class BasketScreen(Screen):
             else:
                 self.item_counts[product_name] = {'count': 1, 'price': price}
 
-        self.basket_items = items  # Update basket items
-        self.total_price = sum([item[1] for item in items])  # Calculate total price
+        self.basket_items = items  # 바구니 아이템 업데이트
+        self.total_price = sum([item[1] for item in items])  # 총 가격 계산
 
-        # Update the UI with basket items and total price
-        self.ids.basket_grid.clear_widgets()  # Clear existing widgets
+        # our_gTTS.announce_basket_info 호출하여 item_counts와 총 가격 전달
+        our_gTTS.announce_basket_info(self.item_counts, self.total_price)
+
+        self.ids.basket_grid.clear_widgets()  # 기존 위젯 삭제
         for product_name, info in self.item_counts.items():
-            label = Label(text=f"{product_name}: ${info['price']:.2f} x {info['count']}", size_hint_y=None, height=40)
-            self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
+            label = Label(text=f"{product_name}: {info['price']:.2f}원 x {info['count']}", size_hint_y=None, height=40)
+            self.ids.basket_grid.add_widget(label)
 
-        # Update the total price label
         self.total_price_text = f"Total Price: ${self.total_price:.2f}\n"
-        #self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + \
-        #                        "\n".join([f"{product_name}: ${info['price']:.2f} x {info['count']}" for product_name, info in self.item_counts.items()])
-        
-    # Method to clear basket and reset total price
+
     def reset_basket(self):
         self.basket_items = []
         self.total_price = 0
         self.total_price_text = "Total Price: $0.00"
-        self.item_counts = {}  # Reset item counts
-        self.ids.basket_grid.clear_widgets()  # Clear existing widgets
+        self.item_counts = {}  # 아이템 개수 초기화
+        self.ids.basket_grid.clear_widgets()
 
 class PayScreen(Screen):
     pass
