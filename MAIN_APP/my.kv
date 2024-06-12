@@ -212,13 +212,23 @@
                         pos: self.pos
                         radius: [18, 18, 18, 18]
                         
-            ScrollView:
+            # Blue Box behind ScrollView
+            BoxLayout:
                 size_hint: 1, 1
-                GridLayout:
-                    id: basket_grid
-                    cols: 1
-                    size_hint_y: None
-                    height: self.minimum_height
+                padding: 10
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 1, 1  # Blue color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                ScrollView:
+                    size_hint: 1, 1
+                    GridLayout:
+                        id: basket_grid
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
 
         BoxLayout:
             size_hint_y: 0.1  
