@@ -125,6 +125,13 @@ class BasketScreen(Screen):
         # Update the total price label
         self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + \
                                 "\n".join([f"{product_name}: ${info['price']:.2f} x {info['count']}" for product_name, info in self.item_counts.items()])
+        
+    # Method to clear basket and reset total price
+    def clear_basket(self):
+        self.basket_items = []
+        self.total_price = 0
+        self.total_price_text = "Total Price: $0.00"
+        self.ids.basket_grid.clear_widgets()
 
 class PayScreen(Screen):
     pass
