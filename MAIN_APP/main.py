@@ -14,8 +14,7 @@ import sqlite3
 from kivy.properties import StringProperty, ListProperty, NumericProperty
 from kivy.uix.gridlayout import GridLayout
 
-
-# 한국어의 정상적인 출력을 위해서 기본 폰트를 'NanumGothicBold.ttf'로 설정함.
+# Register NanumGothicBold.ttf as the default font for proper Korean text display
 LabelBase.register(DEFAULT_FONT, 'NanumGothicBold.ttf')
 
 # Connect to SQLite database
@@ -58,10 +57,9 @@ class MainScreen(Screen):
         self.manager.get_screen('second').set_product_name(product_name)
 
 class SecondScreen(Screen):
-    
-
-    product_data=StringProperty('')
-    basket = ListProperty([])    #장바구니 리스트
+    # Properties to hold product data, basket items, and total price
+    product_data = StringProperty('')
+    basket = ListProperty([])
     price = NumericProperty(0)
 
     # Method to set product name and load its data
@@ -80,9 +78,8 @@ class SecondScreen(Screen):
                 self.product_price = str(product_data[4])
                 self.product_capacity = str(product_data[5])
                 self.product_calorie = str(product_data[6])
-                self.product_data = f"이름: {self.product_name}\n {self.product_brand}\n\n가격: {self.product_price}\n\n용량: {self.product_capacity}\n\n칼로리: {self.product_calorie}"
-
-            else:    #실패사례
+                self.product_data = f"이름: {self.product_name}\n {self.product_brand}\n가격: {self.product_price}\n용량: {self.product_capacity}\n칼로리: {self.product_calorie}"
+            else:  # If product not found in database
                 self.product_data = "Not Found"
         else:
             self.product_data = "No product detected."
@@ -118,16 +115,23 @@ class BasketScreen(Screen):
 
         self.basket_items = items  # Update basket items
         self.total_price = sum([item[1] for item in items])  # Calculate total price
-        self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + "\n".join([f"{item[0]}: ${item[1]:.2f}" for item in items])  # Update text property
-        
+
+        # Update the UI with basket items and total price
         self.ids.basket_grid.clear_widgets()  # Clear existing widgets
-        for item in self.basket_items:
-            label = Label(text=f"{item[0]}: ${item[1]:.2f}", size_hint_y=None, height=40)
+        for product_name, info in self.item_counts.items():
+            label = Label(text=f"{product_name}: ${info['price']:.2f} x {info['count']}", size_hint_y=None, height=40)
             self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
 
         # Update the total price label
         self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + \
-                                "\n".join([f"{item[0]}: ${item[1]:.2f}" for item in items])
+                                "\n".join([f"{product_name}: ${info['price']:.2f} x {info['count']}" for product_name, info in self.item_counts.items()])
+        
+    # Method to clear basket and reset total price
+    def reset_basket(self):
+        self.basket_items = []
+        self.total_price = 0
+        self.total_price_text = "Total Price: $0.00"
+        self.ids.basket_grid.clear_widgets()
 
 class PayScreen(Screen):
     pass

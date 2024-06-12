@@ -215,18 +215,27 @@
                         size: self.size
                         pos: self.pos
                         radius: [18, 18, 18, 18]
-                        
+
+        # Blue Box behind ScrollView
+        BoxLayout:
+            size_hint: 1, 1
+            padding: 10
+            canvas.before:
+                Color:
+                    rgba: 134/255, 182/255, 246/255, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos           
+
             ScrollView:
                 size_hint: 1, 1
+                font_size: 20
                 GridLayout:
                     id: basket_grid
+                    font_size: 20
                     cols: 1
                     size_hint_y: None
                     height: self.minimum_height
-                    Label:
-                        text: "Sample text"  # Misol matn
-                        font_size: 20  # Shrift o'lchami
-                        color: 0, 0, 0, 1  # Qora rang
 
 
         BoxLayout:
@@ -281,13 +290,14 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
 
+            #trashbutton
             Button:
                 id: bsket_button
                 size_hint: None, None
                 size: 270, 200
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
-                on_press: app.root.current = 'main'
+                on_press: root.reset_basket()  # Call the reset function when pressed
                 canvas.before:
                     Color:
                         rgba: 23/255, 107/255, 135/255, 1
