@@ -116,7 +116,7 @@
                 valign: 'middle'
                 font_size: 20
                 font_name: 'NanumGothicBold.ttf'  # 한글을 지원하는 폰트를 추가함.
-                on_press: app.root.current = 'main'
+                on_press: root.announce_product()
                 canvas.before:
                     Color:                        
                         rgba: 134/255, 182/255, 246/255, 1 
@@ -128,18 +128,7 @@
         BoxLayout:
             size_hint_y: 0.1  
 
-        BoxLayout:
-            size_hint_y: None
-            height: '100dp'  
-            pos_hint: {'center_x': 0.6}
-            spacing: 50
-            BoxLayout:
-                id: touch_box
-                size_hint: 1, None
-                height: '200dp'
-                on_touch_down: root.on_touch_down(args[1])   ############################
-                on_touch_move: root.on_touch_move(args[1])
-
+        #back button
         BoxLayout:
             size_hint_y: None
             height: '100dp'  
@@ -164,6 +153,7 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
 
+            #basketscreen button
             Button:
                 id: basket_button
                 size_hint: None, None
@@ -183,19 +173,6 @@
                     source: 'png_files/button_bas.png'  
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y 
-
-        BoxLayout:
-            size_hint_y: None
-            height: '100dp'  
-            pos_hint: {'center_x': 0.6}
-            spacing: 50
-            BoxLayout:
-                id: touch_box
-                size_hint: 1, None
-                height: '200dp'
-                on_touch_down: root.on_touch_down(args[1])
-                on_touch_move: root.on_touch_move(args[1])
-
 
 <BasketScreen>:
     name: 'basket'
@@ -217,7 +194,8 @@
             orientation: 'vertical'
             size_hint_y: None 
             pos_hint: {'center_x': 0.5}
-            height: '100dp'           
+            height: '270dp'           
+            spacing: 50
             Button:
                 id: main_button
                 padding: 10, 10
@@ -225,14 +203,12 @@
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: 1
                 text_size: self.size 
-                font_size: 20
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)                                 
                 halign: 'center'
                 valign: 'middle'
                 font_size: 20
                 font_name: 'NanumGothicBold.ttf'  # 한글을 지원하는 폰트를 추가함.
-                on_press: app.root.current = 'main'
                 canvas.before:
                     Color:       # 중앙버튼                 
                         rgba: 134/255, 182/255, 246/255, 1   
@@ -243,24 +219,25 @@
 
         # Blue Box behind ScrollView
         BoxLayout:
-            orientation: 'vertical'
-            size_hint_y: None 
-            pos_hint: {'center_x': 0.5}
-            id: basket_box
             size_hint: 1, 1
+            padding: 10
             canvas.before:
                 Color:
-                    rgba: 134/255, 182/255, 246/255, 1
+                    rgba: 180/255, 212/255, 255/255, 1
                 RoundedRectangle:
                     size: self.size
-                    pos: self.pos  
-                    radius: [18, 18, 18, 18]         
+                    pos: self.pos        
+                    radius: [18, 18, 18, 18]  
+
+            Label:
+                text_color: 1, 0, 0, 1  # Set text color to red (RGBA format) 
 
             ScrollView:
                 size_hint: 1, 1
-                spacing: 50
+                font_size: 20
                 GridLayout:
                     id: basket_grid
+                    font_size: 20
                     cols: 1
                     size_hint_y: None
                     height: self.minimum_height

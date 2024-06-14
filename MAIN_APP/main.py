@@ -1,3 +1,8 @@
+import sys
+import time
+import sqlite3
+
+from plyer import vibrator
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
@@ -7,15 +12,9 @@ from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.core.text import LabelBase, DEFAULT_FONT
-import sys
-import time
-from plyer import vibrator
-import sqlite3
 from kivy.properties import StringProperty, ListProperty, NumericProperty
 from kivy.uix.gridlayout import GridLayout
 
-from kivy.properties import ObjectProperty
-from kivy.animation import Animation
 
 # Register NanumGothicBold.ttf as the default font for proper Korean text display
 LabelBase.register(DEFAULT_FONT, 'NanumGothicBold.ttf')
@@ -65,64 +64,6 @@ class SecondScreen(Screen):
     basket = ListProperty([])
     price = NumericProperty(0)
 
-    ###########################################################
-    overlay = ObjectProperty(None)
-    touch_start_x = None
-    touch_start_y = None
-
-    def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos):
-            self.touch_start_x = touch.x
-            self.touch_start_y = touch.y
-            return True 
-        return super().on_touch_down(touch)
-
-    def on_touch_move(self, touch):
-        if self.touch_start_x is not None and self.touch_start_y is not None:
-            if abs(touch.x - self.touch_start_x) > 50 and abs(touch.y - self.touch_start_y) < 100:
-                if touch.x > self.touch_start_x:
-                    self.show_swipe_cue('right')
-                else:
-                    self.show_swipe_cue('left')
-        return super(SecondScreen, self).on_touch_move(touch)
-
-    def on_touch_up(self, touch):
-        if self.touch_start_x is not None and self.touch_start_y is not None:
-            if abs(touch.x - self.touch_start_x) > 50 and abs(touch.y - self.touch_start_y) < 100:
-                if touch.x > self.touch_start_x:
-                    self.on_swipe_right()
-                else:
-                    self.on_swipe_left()
-            self.touch_start_x = None
-            self.touch_start_y = None
-        self.hide_swipe_cue()
-        return super(SecondScreen, self).on_touch_up(touch)
-
-    def on_swipe_left(self):
-        self.manager.current = 'main'
-
-    def on_swipe_right(self):
-        self.add_to_basket()
-        self.manager.current = 'basket'
-
-    def add_to_basket(self):
-        # Your logic to add item to the basket
-        pass
-
-    def show_swipe_cue(self, direction):
-        if direction == 'left':
-            self.overlay.color = (1, 0, 0, 0.5)  # Red for left swipe
-        else:
-            self.overlay.color = (0, 1, 0, 0.5)  # Green for right swipe
-        Animation(opacity=0.5, duration=0.1).start(self.overlay)
-
-    def hide_swipe_cue(self):
-
-        Animation(opacity=0, duration=0.1).start(self.overlay)
-
-    
-###########################################################
-
     # Method to set product name and load its data
     def set_product_name(self, product_name):
         self.load_product_data(product_name)
@@ -154,9 +95,10 @@ class SecondScreen(Screen):
             self.basket.append((product_name, price))  # Add product to basket
             self.manager.get_screen('basket').update_basket(self.basket)  # Update basket screen
 
-    def toggle_microphone(self):
-        pass
-
+    # Method to trigger TTS for the detected product
+    def announce_product(self):
+        if product_name:
+            our_gTTS.main(product_name)
 
 class BasketScreen(Screen):
     # Properties to hold basket items and total price
@@ -181,19 +123,17 @@ class BasketScreen(Screen):
         # Update the UI with basket items and total price
         self.ids.basket_grid.clear_widgets()  # Clear existing widgets
         for product_name, info in self.item_counts.items():
-            label = Label(text=f"{product_name}: ${info['price']:.2f} x {info['count']}", size_hint_y=None, height=40)
+            label = Label(text=f"{product_name}: {info['price']:.2f} won x {info['count']}", size_hint_y=None, height=40)
             self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
 
         # Update the total price label
-        self.total_price_text = f"Total Price: ${self.total_price:.2f}\n"
-        #self.total_price_text = f"Total Price: ${self.total_price:.2f}\nItems:\n" + \
-        #                        "\n".join([f"{product_name}: ${info['price']:.2f} x {info['count']}" for product_name, info in self.item_counts.items()])
+        self.total_price_text = f"Total Price: {self.total_price:.2f} won" 
         
     # Method to clear basket and reset total price
     def reset_basket(self):
         self.basket_items = []
         self.total_price = 0
-        self.total_price_text = "Total Price: $0.00"
+        self.total_price_text = "Total Price: 0.00 won"
         self.item_counts = {}  # Reset item counts
         self.ids.basket_grid.clear_widgets()  # Clear existing widgets
 
