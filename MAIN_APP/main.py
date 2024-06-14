@@ -53,7 +53,7 @@ class MainScreen(Screen):
             print(product_name)
 
         # Use text-to-speech to announce the detected product
-        our_gTTS.main(product_name)
+        our_gTTS.main(product_name, 0)
 
         # Store product_name in the app instance for use in other screens
         self.manager.get_screen('second').set_product_name(product_name)
@@ -97,8 +97,8 @@ class SecondScreen(Screen):
 
     # Method to trigger TTS for the detected product
     def announce_product(self):
-        if product_name:
-            our_gTTS.main(product_name)
+        if self.product_name:
+            our_gTTS.main(self.product_name, 1)
 
 class BasketScreen(Screen):
     # Properties to hold basket items and total price
