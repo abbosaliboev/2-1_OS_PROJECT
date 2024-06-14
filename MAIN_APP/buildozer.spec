@@ -4,20 +4,20 @@
 title = My Application
 
 # (str) Package name
-package.name = myapp
+package.name = yolo
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = yolo
 
 # (str) Source code where the main.py live
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas
+source.include_exts = py,png,jpg,kv,ini,db,mp3,ttf,atlas
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = assets/*,images/*.png
-
+source.include_patterns = ../src/*,../yolo/yolo5/yolo5/utils/*,../yolo/yolo5/yolo5/detect.py
 # (list) Source files to exclude (let empty to not exclude anything)
 #source.exclude_exts = spec
 
@@ -37,7 +37,10 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy, pillow
+# (list) Application requirements
+# comma separated e.g. requirements = sqlite3,kivy
+requirements = python3==3.10.12,kivy==2.3.0,hostpython3==3.10.12,pyjnius==1.5.0,pygame,sqlite3,opencv-python-headless,gtts,setuptools,torch,plyer,sys,time,argparse,csv,os,platform,pathlib,json,numpy,pillow,gitpython,matplotlib,opencv-python,psutil,PyYAML,requests,scipy,thop,torchvision,tqdm,ultralytics,pandas,seaborn,wheel
+
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -64,10 +67,10 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3
+osx.python_version = 3.10
 
 # Kivy version to use
-osx.kivy_version = 1.9.1
+osx.kivy_version = 2.3.0
 
 #
 # Android specific
@@ -96,22 +99,21 @@ fullscreen = 0
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions/#build-options-1 for all the supported syntaxes and properties)
 #android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18)
-
+android.permissions = CAMERA, RECORD_AUDIO, INTERNET, ACCESS_FINE_LOCATION, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-#android.api = 31
+android.api = 33
+
 
 # (int) Minimum API your APK / AAB will support.
-#android.minapi = 21
+#android.minapi = 25
 
 # (int) Android SDK version to use
 #android.sdk = 20
-
 # (str) Android NDK version to use
-#android.ndk = 23b
-
+android.ndk = 25b
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
 
@@ -258,7 +260,7 @@ fullscreen = 0
 # (bool) Indicate whether the screen should stay on
 # Don't forget to add the WAKE_LOCK permission if you set this to True
 #android.wakelock = False
-
+android.wakelock = True
 # (list) Android application meta-data to set (key=value format)
 #android.meta_data =
 
@@ -450,11 +452,3 @@ warn_on_root = 1
 #    Then, invoke the command line with the "demo" profile:
 #
 #buildozer --profile demo android debug
-
-# (str) Permissions
-android.permissions = CAMERA, RECORD_AUDIO, WRITE_EXTERNAL_STORAGE
-
-# (list) Application requirements
-requirements = python3,kivy,plyer
-
-requirements = python3,kivy,pyjnius
