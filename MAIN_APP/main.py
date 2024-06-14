@@ -1,3 +1,4 @@
+#update
 import sys
 import time
 import sqlite3
@@ -58,6 +59,10 @@ class MainScreen(Screen):
         # Store product_name in the app instance for use in other screens
         self.manager.get_screen('second').set_product_name(product_name)
 
+        # Change screen only if product_name is not None
+        if product_name is not None:
+            self.manager.current = 'second'
+
 class SecondScreen(Screen):
     # Properties to hold product data, basket items, and total price
     product_data = StringProperty('')
@@ -80,7 +85,7 @@ class SecondScreen(Screen):
                 self.product_price = str(product_data[4])
                 self.product_capacity = str(product_data[5])
                 self.product_calorie = str(product_data[6])
-                self.product_data = f"이름: {self.product_name}\n {self.product_brand}\n가격: {self.product_price}\n용량: {self.product_capacity}\n칼로리: {self.product_calorie}"
+                self.product_data = f"이름: {self.product_name}\n\n {self.product_brand}\n가격: {self.product_price}\n용량: {self.product_capacity}\n칼로리: {self.product_calorie}"
             else:  # If product not found in database
                 self.product_data = "Not Found"
         else:
@@ -122,37 +127,20 @@ class BasketScreen(Screen):
         self.total_price = sum([item[1] for item in items])  # Calculate total price
 
         # Update the UI with basket items and total price
-<<<<<<< HEAD
-        basket_string = "\n\n"
+
+        basket_string = "\n"
         for product_name, info in self.item_counts.items():
-            basket_string += f"{product_name}: ${info['price']:.2f}\t x {info['count']}\n"
+            basket_string += f"{ product_name}: ₩{int(info['price'])}\t\t x {info['count']}\n"
 
         self.basket_list = f"{basket_string}"
-        self.total_price_text = f"Total: ${self.total_price:.2f}"
-=======
-
-        basket_string = "\n\n"
-        for product_name, info in self.item_counts.items():
-            basket_string += f"{product_name}: ₩{info['price']:.2f}\t x {info['count']}\n"
-
-        self.basket_list = f"{basket_string}"
-        self.total_price_text = f"Total: ₩{self.total_price:.2f}"
->>>>>>> ee460cf5ad1dd2a3ecfd1850747da672146ece39
+        self.total_price_text = f"Total: ₩{self.total_price}"
 
     # Method to clear basket and reset total price
     def reset_basket(self):
         self.basket_items = []
         self.total_price = 0
-<<<<<<< HEAD
-        self.basket_list = f"\n\nSo empty...\nBuy something!"
-        self.total_price_text = "Total: $0.00"
-        self.item_counts = {}  # Reset item counts
-    
-    #def announce_basket(self):
-        #our_gTTS.announce_basket_info(item_counts, total_price)
-=======
         self.basket_list = f"So empty...\nBuy something!"
-        self.total_price_text = "Total Price: ₩0.00"
+        self.total_price_text = "      Total Price: ₩0.00"
         self.item_counts = {}  # Reset item counts
     
     def announce_basket(self):
@@ -164,7 +152,6 @@ class BasketScreen(Screen):
             basket_items_str = ', '.join([f"{name} {info['count']}개" for name, info in self.item_counts.items()])
             tts_text = f"장바구니에는 {basket_items_str}가 있습니다. 총 가격은 {self.total_price}원입니다."
         our_gTTS.announce_basket_info(tts_text)
->>>>>>> ee460cf5ad1dd2a3ecfd1850747da672146ece39
 
 class PayScreen(Screen):
     pass
