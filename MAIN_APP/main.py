@@ -130,7 +130,8 @@ class BasketScreen(Screen):
 
         basket_string = "\n"
         for product_name, info in self.item_counts.items():
-            basket_string += f"{ product_name}: ₩{int(info['price'])}\t\t x {info['count']}\n"
+
+            basket_string += f"{product_name}: ₩{int(info['price'])}\t x {info['count']}\n"
 
         self.basket_list = f"{basket_string}"
         self.total_price_text = f"Total: ₩{self.total_price}"
@@ -140,7 +141,7 @@ class BasketScreen(Screen):
         self.basket_items = []
         self.total_price = 0
         self.basket_list = f"So empty...\nBuy something!"
-        self.total_price_text = "      Total Price: ₩0.00"
+        self.total_price_text = "Total Price: ₩0"
         self.item_counts = {}  # Reset item counts
     
     def announce_basket(self):
