@@ -104,6 +104,7 @@ class BasketScreen(Screen):
     # Properties to hold basket items and total price
     basket_items = ListProperty([])
     total_price = NumericProperty(0)
+    basket_list = StringProperty("")
     total_price_text = StringProperty("")
     item_counts = {}  # Dictionary to hold item counts
 
@@ -125,13 +126,15 @@ class BasketScreen(Screen):
         for product_name, info in self.item_counts.items():
             basket_string += f"{product_name}: ${info['price']:.2f} x {info['count']}\n"
 
-        self.total_price_text = f"Total Price: ${self.total_price:.2f}\n\n{basket_string}"
+        self.basket_list = f"{basket_string}"
+        self.total_price_text = f"Total Price: ${self.total_price:.2f}"
 
     # Method to clear basket and reset total price
     def reset_basket(self):
         self.basket_items = []
         self.total_price = 0
-        self.total_price_text = "Total Price: $0.00\n\nBasket is empty."
+        self.basket_list = f"So empty...\nBuy something!"
+        self.total_price_text = "Total Price: $0.00"
         self.item_counts = {}  # Reset item counts
     
     #def announce_basket(self):
