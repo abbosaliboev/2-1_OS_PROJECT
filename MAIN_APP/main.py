@@ -96,7 +96,7 @@ class SecondScreen(Screen):
             self.manager.get_screen('basket').update_basket(self.basket)  # Update basket screen
 
     # Method to trigger TTS for the detected product
-    def announce_product(self, product_name):
+    def announce_product(self):
         if product_name:
             our_gTTS.main(product_name, 1)
 
@@ -124,7 +124,7 @@ class BasketScreen(Screen):
         # Update the UI with basket items and total price
         basket_string = "Basket Items:\n"
         for product_name, info in self.item_counts.items():
-            basket_string += f"{product_name}: ${info['price']:.2f} x {info['count']}\n"
+            basket_string += f"{product_name}: ${info['price']:.2f}\t x {info['count']}\n"
 
         self.basket_list = f"{basket_string}"
         self.total_price_text = f"Total Price: ${self.total_price:.2f}"
@@ -137,8 +137,16 @@ class BasketScreen(Screen):
         self.total_price_text = "Total Price: $0.00"
         self.item_counts = {}  # Reset item counts
     
-    #def announce_basket(self):
-        #our_gTTS.announce_basket_info(item_counts, total_price)
+    def announce_basket(self):
+        if not self.basket_items:
+            # Basket is empty, announce that
+            tts_text = "장바구니가 비어있습니다."
+        else:
+            # Prepare text for TTS
+            basket_items_str = ', '.join([f"{name} {info['count']}개" for name, info in self.item_counts.items()])
+            tts_text = f"장바구니에는 {basket_items_str}가 있습니다. 총 가격은 {self.total_price}원입니다."
+        our_gTTS.announce_basket_info(tts_text)
+
 
 class PayScreen(Screen):
     pass
