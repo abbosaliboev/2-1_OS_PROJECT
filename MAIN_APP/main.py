@@ -97,16 +97,14 @@ class SecondScreen(Screen):
 
     # Method to trigger TTS for the detected product
     def announce_product(self):
-
-        if self.product_name:
-            our_gTTS.main(self.product_name, 1)
-
-
+        if product_name:
+            our_gTTS.main(product_name, 1)
 
 class BasketScreen(Screen):
     # Properties to hold basket items and total price
     basket_items = ListProperty([])
     total_price = NumericProperty(0)
+    basket_list = StringProperty("")
     total_price_text = StringProperty("")
     item_counts = {}  # Dictionary to hold item counts
 
@@ -124,25 +122,23 @@ class BasketScreen(Screen):
         self.total_price = sum([item[1] for item in items])  # Calculate total price
 
         # Update the UI with basket items and total price
-        self.ids.basket_grid.clear_widgets()  # Clear existing widgets
+        basket_string = "\n\n"
         for product_name, info in self.item_counts.items():
+            basket_string += f"{product_name}: ${info['price']:.2f}\t x {info['count']}\n"
 
-            label = Label(text=f"{product_name}: {info['price']:.2f} won x {info['count']}", size_hint_y=None, height=40)
-            self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
+        self.basket_list = f"{basket_string}"
+        self.total_price_text = f"Total Price: ${self.total_price:.2f}"
 
-        # Update the total price label
-        self.total_price_text = f"Total Price: {self.total_price:.2f} won" 
-
-        
     # Method to clear basket and reset total price
     def reset_basket(self):
         self.basket_items = []
         self.total_price = 0
-
-        self.total_price_text = "Total Price: 0.00 won"
-
+        self.basket_list = f"\n\nSo empty...\nBuy something!"
+        self.total_price_text = "Total Price: $0.00"
         self.item_counts = {}  # Reset item counts
-        self.ids.basket_grid.clear_widgets()  # Clear existing widgets
+    
+    #def announce_basket(self):
+        #our_gTTS.announce_basket_info(item_counts, total_price)
 
 class PayScreen(Screen):
     pass
