@@ -96,9 +96,9 @@ class SecondScreen(Screen):
             self.manager.get_screen('basket').update_basket(self.basket)  # Update basket screen
 
     # Method to trigger TTS for the detected product
-    def announce_product(self):
-        if self.product_name:
-            our_gTTS.main(self.product_name, 1)
+    def announce_product(self, product_name):
+        if product_name:
+            our_gTTS.main(product_name, 1)
 
 class BasketScreen(Screen):
     # Properties to hold basket items and total price
