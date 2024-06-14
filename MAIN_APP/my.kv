@@ -179,7 +179,7 @@
     BoxLayout:   # 바탕 정보
         orientation: 'vertical'
         padding: 60, 20
-        spacing: 20
+        spacing: 0
         canvas.before:
             Color:
                 rgba: 238/255, 245/255, 255/255, 1 
@@ -194,21 +194,22 @@
             orientation: 'vertical'
             size_hint_y: None 
             pos_hint: {'center_x': 0.5}
-            height: '270dp'           
+            height: '600dp'           
             spacing: 50
             Button:
                 id: main_button
                 padding: 10, 10
-                text: root.total_price_text
+                text: root.basket_list
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: 1
                 text_size: self.size 
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)                                 
-                halign: 'center'
-                valign: 'middle'
-                font_size: 20
+                halign: 'left'
+                valign: 'top'
+                font_size: 30
                 font_name: 'NanumGothicBold.ttf'  # 한글을 지원하는 폰트를 추가함.
+                on_press: app.root.current = 'main'
                 canvas.before:
                     Color:       # 중앙버튼                 
                         rgba: 134/255, 182/255, 246/255, 1   
@@ -216,31 +217,11 @@
                         size: self.size
                         pos: self.pos
                         radius: [18, 18, 18, 18]
-
-        # Blue Box behind ScrollView
-        BoxLayout:
-            size_hint: 1, 1
-            padding: 10
-            canvas.before:
-                Color:
-                    rgba: 180/255, 212/255, 255/255, 1
-                RoundedRectangle:
-                    size: self.size
-                    pos: self.pos        
-                    radius: [18, 18, 18, 18]  
-
-
-
-
-            ScrollView:
-                size_hint: 1, 1
-                font_size: 20
-                GridLayout:
-                    id: basket_grid
-                    font_size: 20
-                    cols: 1
-                    size_hint_y: None
-                    height: self.minimum_height
+                Image:
+                    source: 'png_files/button_trash1.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + 320
+            
 
 
         BoxLayout:
@@ -254,8 +235,13 @@
             padding: 10,30
             Button:
                 id: back_button
+                text: root.total_price_text
+                halign: 'right'
+                valign: 'middle'
+                font_size: 30
+                font_name: 'NanumGothicBold.ttf'
                 size_hint: None, None
-                size: 560, 200
+                size: 560, 100
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: app.root.current = 'pay'
@@ -268,7 +254,7 @@
                         radius: [32, 32, 32, 32]  
                 Image:
                     source: 'png_files/button_card.png'  
-                    center_x: self.parent.center_x
+                    center_x: self.parent.center_x - 200
                     center_y: self.parent.center_y
 
         BoxLayout:
@@ -279,7 +265,7 @@
             Button:
                 id: back_button
                 size_hint: None, None
-                size: 250, 200
+                size: 150, 100
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: app.root.current = 'main'
@@ -299,7 +285,7 @@
             Button:
                 id: bsket_button
                 size_hint: None, None
-                size: 270, 200
+                size: 170, 100
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: root.reset_basket()  # Call the reset function when pressed
