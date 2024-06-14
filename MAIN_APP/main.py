@@ -97,8 +97,10 @@ class SecondScreen(Screen):
 
     # Method to trigger TTS for the detected product
     def announce_product(self):
+
         if self.product_name:
             our_gTTS.main(self.product_name, 1)
+
 
 
 class BasketScreen(Screen):
