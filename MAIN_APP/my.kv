@@ -114,7 +114,7 @@
                 halign: 'center'
                 valign: 'middle'
                 font_name: 'NanumGothicBold.ttf'  # 한글을 지원하는 폰트를 추가함.
-                on_press: app.root.current = 'main'
+                on_press: root.announce_product()
                 canvas.before:
                     Color:                        
                         rgba: 60/255, 165/255, 113/255, 1  
@@ -272,13 +272,14 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
 
+            #trashbutton
             Button:
                 id: bsket_button
                 size_hint: None, None
                 size: 270, 200
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
-                on_press: app.root.current = 'main'
+                on_press: root.reset_basket()  # Call the reset function when pressed
                 canvas.before:
                     Color:
                         rgba: 0, 0, 0, 1
