@@ -115,41 +115,45 @@ class BasketScreen(Screen):
 
     # Method to update basket items and total price
     def update_basket(self, items):
-        self.basket_items = items  # Update basket items
-        self.total_price = sum([item[1] for item in items])  # Calculate total price
-        
-        # Reset item counts
+        # Reset basket items and item counts
+        self.basket_items = []
         self.item_counts = {}
-        
-        # Update item counts based on new basket items
+
+        # Update basket items and calculate item counts
         for item in items:
             product_name, price = item
             if product_name in self.item_counts:
                 self.item_counts[product_name]['count'] += 1
             else:
                 self.item_counts[product_name] = {'count': 1, 'price': price}
+            self.basket_items.append(item)
 
-        self.basket_items = items  # Update basket items
-        self.total_price = sum([item[1] for item in items])  # Calculate total price
+        # Calculate total price
+        self.total_price = sum([item[1] for item in items])
 
         # Update the UI with basket items and total price
-
-        basket_string = "\n"
-        for product_name, info in self.item_counts.items():
-
-            basket_string += f"{product_name}: ₩{int(info['price'])}\t x {info['count']}\n"
-
-        self.basket_list = f"{basket_string}"
-        self.total_price_text = f"Total: ₩{self.total_price}"
+        self.update_ui()
 
     # Method to clear basket and reset total price
     def reset_basket(self):
         self.basket_items = []
         self.total_price = 0
-        self.basket_list = f"So empty...\nBuy something!"
-        self.total_price_text = "Total Price: ₩0"
         self.item_counts = {}  # Reset item counts
-    
+        self.update_ui()
+
+    # Update UI with current basket items and total price
+    def update_ui(self):
+        if not self.basket_items:
+            self.basket_list = "So empty...\nBuy something!"
+            self.total_price_text = "Total Price: ₩0"
+        else:
+            basket_string = "\n\n"
+            for product_name, info in self.item_counts.items():
+                basket_string += f"{product_name}: ₩{int(info['price'])}\t x {info['count']}\n"
+
+            self.basket_list = basket_string
+            self.total_price_text = f"Total: ₩{self.total_price}"
+
     def announce_basket(self):
         if not self.basket_items:
             # Basket is empty, announce that
