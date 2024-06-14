@@ -36,10 +36,10 @@ def announce_product_info(product_name):
 
 def announce_product_data(product_name):
     product_info = get_product_info(product_name)
-    if product_info is not None:
+    if product_info:
         id, name, korean_name, brand, price, capacity, calories = product_info
         # 제품 정보를 한국어로 출력
-        tts_text = f"해당 제품은 {korean_name} {capacity}입니다. 제조사는 {brand}, 편의점 가격은 {price}원, 용량은 {capacity}이며 {calories} 칼로리를 가지고 있습니다."
+        tts_text = f"이 제품은 {korean_name} {capacity}이며, 제조사는 {brand}입니다. 편의점 가격은 {price}원이며, 칼로리는 {calories} 칼로리가 포함되어 있습니다."
     else:
         tts_text = "죄송합니다. 현재 해당 제품은 등록되어 있지 않습니다."
 
@@ -64,25 +64,37 @@ def announce_product_data(product_name):
 
 
 
+<<<<<<< HEAD
 """def announce_basket_info(item_counts, total_price):
     # 장바구니의 제품 이름을 사용하여 제품 정보를 로드하고, 이를 한국어로 출력
     product_names_str = ', '.join([f"{name} {info['count']}개" for name, info in item_counts.items()])
     tts_text = f"장바구니에는 {product_names_str}가 있습니다. 총 가격은 {total_price}원입니다."
+=======
+def announce_basket_info(tts_text):
+>>>>>>> ee460cf5ad1dd2a3ecfd1850747da672146ece39
 
+    # Generate TTS for the basket contents and total price
     tts = gTTS(text=tts_text, lang='ko', slow=False)
-    
+
+    # Save TTS to file
     if os.path.exists("basket_info.mp3"):
         os.remove("basket_info.mp3")
     tts.save("basket_info.mp3")
 
+    # Play TTS using pygame
     pygame.mixer.init()
     pygame.mixer.music.load("basket_info.mp3")
     pygame.mixer.music.play()
 
+    # Wait until TTS finishes playing
     while pygame.mixer.music.get_busy():
         pygame.time.Clock().tick(10)
 
+<<<<<<< HEAD
     pygame.mixer.quit()"""
+=======
+    pygame.mixer.quit()  # Release resources after TTS operation
+>>>>>>> ee460cf5ad1dd2a3ecfd1850747da672146ece39
     
 def main(product_name, case):
     # 해당 제품의 정보를 음성으로 출력
@@ -90,8 +102,11 @@ def main(product_name, case):
         announce_product_info(product_name)
     elif case == 1:
         announce_product_data(product_name)
+<<<<<<< HEAD
     #else:
         #announce_basket_info(item_counts, total_price)
+=======
+>>>>>>> ee460cf5ad1dd2a3ecfd1850747da672146ece39
 
 
 if __name__ == "__main__":
