@@ -58,6 +58,10 @@ class MainScreen(Screen):
         # Store product_name in the app instance for use in other screens
         self.manager.get_screen('second').set_product_name(product_name)
 
+        # Change screen only if product_name is not None
+        if product_name is not None:
+            self.manager.current = 'second'
+
 class SecondScreen(Screen):
     # Properties to hold product data, basket items, and total price
     product_data = StringProperty('')
