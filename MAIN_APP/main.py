@@ -1,3 +1,112 @@
+"""<BasketScreen>:
+    name: 'basket'
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 60, 20
+        spacing: 10
+        canvas.before:
+            Color:
+                rgba: 238/255, 245/255, 255/255, 1  
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+
+        BoxLayout:
+            size_hint_y: None
+            height: '350dp'
+            orientation: 'vertical'
+            spacing: 20
+
+            Button:
+                id: info_button
+                text: 'Information Box'
+                size_hint_y: None
+                height: '100dp'
+                background_color: 0, 0, 1, 1  # Blue background color
+                on_press: root.announce_product()
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: '250dp'
+                    spacing: 10
+
+                    Label:
+                        text: 'Total Price:'
+                        bold: True
+                        font_size: 20
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    Label:
+                        text: root.total_price_text
+                        bold: True
+                        font_size: 20
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    ScrollView:
+                        size_hint: 1, None
+                        height: '150dp'
+                        GridLayout:
+                            id: basket_grid
+                            cols: 1
+                            size_hint_y: None
+                            height: self.minimum_height
+                            spacing: 10
+        BoxLayout:
+            size_hint_y: 0.1  
+
+        #back button
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  
+            pos_hint: {'center_x': 0.6}
+            spacing: 50
+            Button:
+                id: back_button
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)  
+                on_press: app.root.current = 'main'
+                canvas.before:
+                    Color:
+                        rgba:  23/255, 107/255, 135/255, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]  
+                Image:
+                    source: 'png_files/button_back.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+
+            #basketscreen button
+            Button:
+                id: basket_button
+                size_hint: None, None
+                size: 200, 200
+                background_normal: ''
+                background_color: (48/255, 84/255, 150/255, 0)
+                on_press: root.add_to_basket()
+                on_press: app.root.current = 'basket'
+                canvas.before:
+                    Color:
+                        rgba: 23/255, 107/255, 135/255, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [32, 32, 32, 32]
+                Image:
+                    source: 'png_files/button_bas.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y """
+
 import sys
 import time
 import sqlite3
