@@ -122,6 +122,7 @@ class BasketScreen(Screen):
         self.total_price = sum([item[1] for item in items])  # Calculate total price
 
         # Update the UI with basket items and total price
+
         basket_string = "\n\n"
         for product_name, info in self.item_counts.items():
             basket_string += f"{product_name}: ${info['price']:.2f}\t x {info['count']}\n"
@@ -133,12 +134,19 @@ class BasketScreen(Screen):
     def reset_basket(self):
         self.basket_items = []
         self.total_price = 0
-        self.basket_list = f"\n\nSo empty...\nBuy something!"
+        self.basket_list = f"So empty...\nBuy something!"
         self.total_price_text = "Total Price: $0.00"
         self.item_counts = {}  # Reset item counts
     
-    #def announce_basket(self):
-        #our_gTTS.announce_basket_info(item_counts, total_price)
+    def announce_basket(self):
+        if not self.basket_items:
+            # Basket is empty, announce that
+            tts_text = "장바구니가 비어있습니다."
+        else:
+            # Prepare text for TTS
+            basket_items_str = ', '.join([f"{name} {info['count']}개" for name, info in self.item_counts.items()])
+            tts_text = f"장바구니에는 {basket_items_str}가 있습니다. 총 가격은 {self.total_price}원입니다."
+        our_gTTS.announce_basket_info(tts_text)
 
 class PayScreen(Screen):
     pass
