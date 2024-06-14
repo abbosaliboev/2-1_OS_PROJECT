@@ -53,7 +53,7 @@ class MainScreen(Screen):
             print(product_name)
 
         # Use text-to-speech to announce the detected product
-        our_gTTS.main(product_name)
+        our_gTTS.main(product_name, 0)
 
         # Store product_name in the app instance for use in other screens
         self.manager.get_screen('second').set_product_name(product_name)
@@ -97,8 +97,9 @@ class SecondScreen(Screen):
 
     # Method to trigger TTS for the detected product
     def announce_product(self):
-        if product_name:
-            our_gTTS.main(product_name)
+        if self.product_name:
+            our_gTTS.main(self.product_name, 1)
+
 
 class BasketScreen(Screen):
     # Properties to hold basket items and total price
@@ -123,17 +124,21 @@ class BasketScreen(Screen):
         # Update the UI with basket items and total price
         self.ids.basket_grid.clear_widgets()  # Clear existing widgets
         for product_name, info in self.item_counts.items():
+
             label = Label(text=f"{product_name}: {info['price']:.2f} won x {info['count']}", size_hint_y=None, height=40)
             self.ids.basket_grid.add_widget(label)  # Add item labels to the grid layout
 
         # Update the total price label
         self.total_price_text = f"Total Price: {self.total_price:.2f} won" 
+
         
     # Method to clear basket and reset total price
     def reset_basket(self):
         self.basket_items = []
         self.total_price = 0
+
         self.total_price_text = "Total Price: 0.00 won"
+
         self.item_counts = {}  # Reset item counts
         self.ids.basket_grid.clear_widgets()  # Clear existing widgets
 
