@@ -199,15 +199,15 @@
             Button:
                 id: main_button
                 padding: 10, 10
-                text: root.total_price_text
+                text: root.basket_list
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: 1
                 text_size: self.size 
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)                                 
-                halign: 'center'
-                valign: 'middle'
-                font_size: 20
+                halign: 'left'
+                valign: 'top'
+                font_size: 30
                 font_name: 'NanumGothicBold.ttf'  # 한글을 지원하는 폰트를 추가함.
                 on_press: app.root.current = 'main'
                 canvas.before:
@@ -217,6 +217,14 @@
                         size: self.size
                         pos: self.pos
                         radius: [18, 18, 18, 18]
+        Label:
+            text: root.total_price_text  # Display the total price text
+            size_hint_y: None
+            height: '50dp'
+            font_size: 20
+            font_name: 'NanumGothicBold.ttf'
+            halign: 'right'
+            valign: 'bottom'
 
 
         BoxLayout:
