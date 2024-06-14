@@ -1,3 +1,4 @@
+#update
 import sys
 import time
 import sqlite3
@@ -84,7 +85,7 @@ class SecondScreen(Screen):
                 self.product_price = str(product_data[4])
                 self.product_capacity = str(product_data[5])
                 self.product_calorie = str(product_data[6])
-                self.product_data = f"이름: {self.product_name}\n {self.product_brand}\n가격: {self.product_price}\n용량: {self.product_capacity}\n칼로리: {self.product_calorie}"
+                self.product_data = f"이름: {self.product_name}\n\n {self.product_brand}\n가격: {self.product_price}\n용량: {self.product_capacity}\n칼로리: {self.product_calorie}"
             else:  # If product not found in database
                 self.product_data = "Not Found"
         else:
@@ -127,8 +128,9 @@ class BasketScreen(Screen):
 
         # Update the UI with basket items and total price
 
-        basket_string = "\n\n"
+        basket_string = "\n"
         for product_name, info in self.item_counts.items():
+
             basket_string += f"{product_name}: ₩{int(info['price'])}\t x {info['count']}\n"
 
         self.basket_list = f"{basket_string}"
