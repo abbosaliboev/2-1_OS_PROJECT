@@ -179,7 +179,7 @@
     BoxLayout:   # 바탕 정보
         orientation: 'vertical'
         padding: 60, 20
-        spacing: 0
+        spacing: 20
         canvas.before:
             Color:
                 rgba: 238/255, 245/255, 255/255, 1 
@@ -209,7 +209,6 @@
                 valign: 'middle'
                 font_size: 20
                 font_name: 'NanumGothicBold.ttf'  # 한글을 지원하는 폰트를 추가함.
-                on_press: app.root.current = 'main'
                 canvas.before:
                     Color:       # 중앙버튼                 
                         rgba: 134/255, 182/255, 246/255, 1   
@@ -224,10 +223,12 @@
             padding: 10
             canvas.before:
                 Color:
-                    rgba: 134/255, 182/255, 246/255, 1
-                Rectangle:
+                    rgba: 180/255, 212/255, 255/255, 1
+                RoundedRectangle:
                     size: self.size
-                    pos: self.pos           
+                    pos: self.pos        
+                    radius: [18, 18, 18, 18]  
+
 
             ScrollView:
                 size_hint: 1, 1
