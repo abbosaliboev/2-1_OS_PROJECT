@@ -36,10 +36,10 @@ def announce_product_info(product_name):
 
 def announce_product_data(product_name):
     product_info = get_product_info(product_name)
-    if product_info is not None:
+    if product_info:
         id, name, korean_name, brand, price, capacity, calories = product_info
         # 제품 정보를 한국어로 출력
-        tts_text = f"해당 제품은 {korean_name} {capacity}입니다. 제조사는 {brand}, 편의점 가격은 {price}원, 용량은 {capacity}이며 {calories} 칼로리를 가지고 있습니다."
+        tts_text = f"이 제품은 {korean_name} {capacity}이며, 제조사는 {brand}입니다. 편의점 가격은 {price}원이며, 칼로리는 {calories} 칼로리가 포함되어 있습니다."
     else:
         tts_text = "죄송합니다. 현재 해당 제품은 등록되어 있지 않습니다."
 
@@ -86,12 +86,12 @@ def announce_basket_info(item_counts, total_price):
     
 def main(product_name, case):
     # 해당 제품의 정보를 음성으로 출력
-    if case == 1:
+    if case == 0:
         announce_product_info(product_name)
-    elif case == 2:
+    elif case == 1:
         announce_product_data(product_name)
-    else:
-        def announce_basket_info(item_counts, total_price)
+    #else:
+        #announce_basket_info(item_counts, total_price)
 
 
 if __name__ == "__main__":
