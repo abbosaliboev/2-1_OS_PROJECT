@@ -64,7 +64,7 @@ def announce_product_data(product_name):
 
 
 
-def announce_basket_info(item_counts, total_price):
+"""def announce_basket_info(item_counts, total_price):
     # 장바구니의 제품 이름을 사용하여 제품 정보를 로드하고, 이를 한국어로 출력
     product_names_str = ', '.join([f"{name} {info['count']}개" for name, info in item_counts.items()])
     tts_text = f"장바구니에는 {product_names_str}가 있습니다. 총 가격은 {total_price}원입니다."
@@ -82,16 +82,16 @@ def announce_basket_info(item_counts, total_price):
     while pygame.mixer.music.get_busy():
         pygame.time.Clock().tick(10)
 
-    pygame.mixer.quit()
+    pygame.mixer.quit()"""
     
 def main(product_name, case):
     # 해당 제품의 정보를 음성으로 출력
-    if case == 1:
+    if case == 0:
         announce_product_info(product_name)
-    elif case == 2:
+    elif case == 1:
         announce_product_data(product_name)
-    else:
-        def announce_basket_info(item_counts, total_price)
+    #else:
+        #announce_basket_info(item_counts, total_price)
 
 
 if __name__ == "__main__":
