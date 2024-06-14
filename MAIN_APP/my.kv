@@ -133,6 +133,18 @@
             height: '100dp'  
             pos_hint: {'center_x': 0.6}
             spacing: 50
+            BoxLayout:
+                id: touch_box
+                size_hint: 1, None
+                height: '200dp'
+                on_touch_down: root.on_touch_down(args[1])   ############################
+                on_touch_move: root.on_touch_move(args[1])
+
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  
+            pos_hint: {'center_x': 0.6}
+            spacing: 50
             Button:
                 id: back_button
                 size_hint: None, None
@@ -172,12 +184,25 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y 
 
+        BoxLayout:
+            size_hint_y: None
+            height: '100dp'  
+            pos_hint: {'center_x': 0.6}
+            spacing: 50
+            BoxLayout:
+                id: touch_box
+                size_hint: 1, None
+                height: '200dp'
+                on_touch_down: root.on_touch_down(args[1])
+                on_touch_move: root.on_touch_move(args[1])
+
+
 <BasketScreen>:
     name: 'basket'
     BoxLayout:   # 바탕 정보
         orientation: 'vertical'
         padding: 60, 20
-        spacing: 0
+        spacing: 20
         canvas.before:
             Color:
                 rgba: 238/255, 245/255, 255/255, 1 
@@ -192,8 +217,7 @@
             orientation: 'vertical'
             size_hint_y: None 
             pos_hint: {'center_x': 0.5}
-            height: '270dp'           
-            spacing: 50
+            height: '100dp'           
             Button:
                 id: main_button
                 padding: 10, 10
@@ -201,6 +225,7 @@
                 pos_hint: {'center_y': 0.5}
                 size_hint_y: 1
                 text_size: self.size 
+                font_size: 20
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)                                 
                 halign: 'center'
@@ -218,21 +243,24 @@
 
         # Blue Box behind ScrollView
         BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None 
+            pos_hint: {'center_x': 0.5}
+            id: basket_box
             size_hint: 1, 1
-            padding: 10
             canvas.before:
                 Color:
                     rgba: 134/255, 182/255, 246/255, 1
-                Rectangle:
+                RoundedRectangle:
                     size: self.size
-                    pos: self.pos           
+                    pos: self.pos  
+                    radius: [18, 18, 18, 18]         
 
             ScrollView:
                 size_hint: 1, 1
-                font_size: 20
+                spacing: 50
                 GridLayout:
                     id: basket_grid
-                    font_size: 20
                     cols: 1
                     size_hint_y: None
                     height: self.minimum_height
