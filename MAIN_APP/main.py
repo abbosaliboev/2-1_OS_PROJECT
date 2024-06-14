@@ -115,7 +115,13 @@ class BasketScreen(Screen):
 
     # Method to update basket items and total price
     def update_basket(self, items):
-        self.item_counts = {}  # Reset item counts
+        self.basket_items = items  # Update basket items
+        self.total_price = sum([item[1] for item in items])  # Calculate total price
+        
+        # Reset item counts
+        self.item_counts = {}
+        
+        # Update item counts based on new basket items
         for item in items:
             product_name, price = item
             if product_name in self.item_counts:
