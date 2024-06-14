@@ -217,14 +217,12 @@
                         size: self.size
                         pos: self.pos
                         radius: [18, 18, 18, 18]
-        Label:
-            text: root.total_price_text  # Display the total price text
-            size_hint_y: None
-            height: '50dp'
-            font_size: 20
-            font_name: 'NanumGothicBold.ttf'
-            halign: 'right'
-            valign: 'bottom'
+                Image:
+                    source: 'png_files/button_trash1.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + 320
+            
+
 
 
         BoxLayout:
@@ -238,8 +236,13 @@
             padding: 10,30
             Button:
                 id: back_button
+                text: root.total_price_text
+                halign: 'right'
+                valign: 'middle'
+                font_size: 30
+                font_name: 'NanumGothicBold.ttf'
                 size_hint: None, None
-                size: 560, 200
+                size: 560, 100
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: app.root.current = 'pay'
@@ -252,7 +255,7 @@
                         radius: [32, 32, 32, 32]  
                 Image:
                     source: 'png_files/button_card.png'  
-                    center_x: self.parent.center_x
+                    center_x: self.parent.center_x - 200
                     center_y: self.parent.center_y
 
         BoxLayout:
@@ -263,7 +266,7 @@
             Button:
                 id: back_button
                 size_hint: None, None
-                size: 250, 200
+                size: 150, 100
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: app.root.current = 'main'
@@ -283,7 +286,7 @@
             Button:
                 id: bsket_button
                 size_hint: None, None
-                size: 270, 200
+                size: 170, 100
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: root.reset_basket()  # Call the reset function when pressed
