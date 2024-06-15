@@ -221,7 +221,7 @@ def run(
                     confidence = float(conf)
 
                     # 아래의 코드는 모델의 출력값 중 [제품명]과 [확률]을 별도로 저장할 수 있도록 추가로 작성한 코드입니다.
-                    if(confidence>0.8): # 모델이 제품을 확신하는 정도가 50%가 넘는 경우에만 result 리스트에 추가합니다.
+                    if(confidence>0.5): # 모델이 제품을 확신하는 정도가 50%가 넘는 경우에만 result 리스트에 추가합니다.
                         temp = [] # [제품명] 과 [확률]을 저장할 리스트 변수 temp
                         temp.append(label) # temp에 [제품명] 추가
                         temp.append(confidence) # temp에 [확률] 추가
