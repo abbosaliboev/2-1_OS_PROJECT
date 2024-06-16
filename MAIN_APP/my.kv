@@ -122,7 +122,13 @@
                     RoundedRectangle:
                         size: self.size
                         pos: self.pos
-                        radius: [18, 18, 18, 18]    
+                        radius: [18, 18, 18, 18]   
+
+                Image:
+                    size: 1000, 500
+                    source: 'png_files/information2.png'  
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y + 340 
 
         BoxLayout:
             size_hint_y: 0.1  
@@ -173,12 +179,13 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y 
 
+
 <BasketScreen>:
     name: 'basket'
     BoxLayout:   # 바탕 정보
         orientation: 'vertical'
-        padding: 60, 20
-        spacing: 0
+        padding: 40, 60
+        spacing: 70
         canvas.before:
             Color:
                 rgba: 238/255, 245/255, 255/255, 1 
@@ -193,14 +200,14 @@
             orientation: 'vertical'
             size_hint_y: None 
             pos_hint: {'center_x': 0.5}
-            height: '600dp'           
-            spacing: 50
+            padding: 0, -55
+            height: '320dp'           
+
             Button:
                 id: main_button
-                padding: 10, 10
                 text: root.basket_list
-                pos_hint: {'center_y': 0.5}
                 size_hint_y: 1
+                font_size: 50
                 text_size: self.size 
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)                                 
@@ -208,7 +215,7 @@
                 valign: 'top'
                 font_size: 30
                 font_name: 'NanumGothicBold.ttf'  # 한글을 지원하는 폰트를 추가함.
-                on_press: announce_basket()
+                on_press: root.announce_basket()
                 canvas.before:
                     Color:       # 중앙버튼                 
                         rgba: 134/255, 182/255, 246/255, 1   
@@ -216,32 +223,34 @@
                         size: self.size
                         pos: self.pos
                         radius: [18, 18, 18, 18]
+
                 Image:
-                    source: 'png_files/button_trash1.png'  
+                    size: 300, 100
+                    source: 'png_files/button_trash2.png'  
                     center_x: self.parent.center_x
-                    center_y: self.parent.center_y + 320
+                    center_y: self.parent.center_y + 270
             
-
-
-
         BoxLayout:
-            size_hint_y: 0.1  
+            size_hint_y: 0.1
+
 
         BoxLayout:
             size_hint_y: None
+            pos_hint: {'center_x': 0.9}
             height: '100dp'  
-            pos_hint: {'center_x': 0.50}
+            pos_hint: {'center_x': 0.44}
             spacing: 50
-            padding: 10,30
+            padding: 60, 0
+
             Button:
-                id: back_button
+                id: pay_button
                 text: root.total_price_text
+                #pos_hint: {'center_x': -0.5}
+                size_hint: None, None
                 halign: 'right'
                 valign: 'middle'
                 font_size: 30
-                font_name: 'NanumGothicBold.ttf'
-                size_hint: None, None
-                size: 560, 100
+                size: 560, 150
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: app.root.current = 'pay'
@@ -254,18 +263,20 @@
                         radius: [32, 32, 32, 32]  
                 Image:
                     source: 'png_files/button_card.png'  
-                    center_x: self.parent.center_x - 200
+                    center_x: self.parent.center_x -180
                     center_y: self.parent.center_y
 
         BoxLayout:
             size_hint_y: None
             height: '100dp'  
-            pos_hint: {'center_x': 0.52}
+            pos_hint: {'center_x': 0.50}
+            padding: 32, -30
             spacing: 50
+
             Button:
                 id: back_button
                 size_hint: None, None
-                size: 150, 100
+                size: 250, 170
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: app.root.current = 'main'
@@ -283,9 +294,9 @@
 
             #trashbutton
             Button:
-                id: bsket_button
+                id: basket_button
                 size_hint: None, None
-                size: 170, 100
+                size: 250, 170
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: root.reset_basket()  # Call the reset function when pressed
