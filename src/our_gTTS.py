@@ -63,15 +63,7 @@ def announce_product_data(product_name):
                         # 종료해주지 않고 다시 실행하면 pygame.mixer가 이용하는 mp3파일이 삭제됨(사용중인 파일을 삭제하는 오류)
 
 
-
-<<<<<<< HEAD
-"""def announce_basket_info(item_counts, total_price):
-    # 장바구니의 제품 이름을 사용하여 제품 정보를 로드하고, 이를 한국어로 출력
-    product_names_str = ', '.join([f"{name} {info['count']}개" for name, info in item_counts.items()])
-    tts_text = f"장바구니에는 {product_names_str}가 있습니다. 총 가격은 {total_price}원입니다."
-=======
 def announce_basket_info(tts_text):
->>>>>>> ee460cf5ad1dd2a3ecfd1850747da672146ece39
 
     # Generate TTS for the basket contents and total price
     tts = gTTS(text=tts_text, lang='ko', slow=False)
@@ -89,12 +81,7 @@ def announce_basket_info(tts_text):
     # Wait until TTS finishes playing
     while pygame.mixer.music.get_busy():
         pygame.time.Clock().tick(10)
-
-<<<<<<< HEAD
-    pygame.mixer.quit()"""
-=======
     pygame.mixer.quit()  # Release resources after TTS operation
->>>>>>> ee460cf5ad1dd2a3ecfd1850747da672146ece39
     
 def main(product_name, case):
     # 해당 제품의 정보를 음성으로 출력
@@ -102,12 +89,7 @@ def main(product_name, case):
         announce_product_info(product_name)
     elif case == 1:
         announce_product_data(product_name)
-<<<<<<< HEAD
-    #else:
-        #announce_basket_info(item_counts, total_price)
-=======
->>>>>>> ee460cf5ad1dd2a3ecfd1850747da672146ece39
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     main()
