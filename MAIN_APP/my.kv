@@ -317,8 +317,8 @@
     name: 'pay'
     BoxLayout:
         orientation: 'vertical'
-        padding: 60, 20
         spacing: 0
+        padding: 20
         canvas.before:
             Color:
                 rgba: 238/255, 245/255, 255/255, 1  
@@ -330,7 +330,9 @@
             size_hint_y: 0.1 
 
         BoxLayout:
-            size_hint_y: 1  
+            size_hint_y: None  
+            height: '450dp'
+            valign: 'center'
             canvas.before:
                 Color:
                     rgba: 226/255, 223/255, 208/255, 0.3
@@ -349,7 +351,7 @@
                 Image:
                     source: 'png_files/qr.png'  
                     size_hint: None, None
-                    size: 550, 200
+                    size: 670, 150
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y 
 
@@ -360,7 +362,7 @@
         BoxLayout:
             size_hint_y: None
             height: '100dp'  
-            pos_hint: {'center_x': 0.6}
+            pos_hint: {'center_x': 0.86}
             spacing: 50
             Button:
                 id: back_button
@@ -381,24 +383,6 @@
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
 
-            Button:
-                id: microphone_button
-                size_hint: None, None
-                size: 200, 200
-                background_normal: ''
-                background_color: (48/255, 84/255, 150/255, 0)  
-                on_press: root.toggle_microphone()
-                canvas.before:
-                    Color:
-                        rgba: 23/255, 107/255, 135/255, 1
-                    RoundedRectangle:
-                        pos: self.pos
-                        size: self.size
-                        radius: [32, 32, 32, 32]
-                Image:
-                    source: 'png_files/button_mic.png'  
-                    center_x: self.parent.center_x
-                    center_y: self.parent.center_y 
 
 
 
@@ -453,12 +437,12 @@
         BoxLayout:
             size_hint_y: None
             height: '100dp'  
-            pos_hint: {'center_x': 0.6}
+            pos_hint: {'center_x': 0.86}
             spacing: 50
             Button:
                 id: back_button
-                size_hint: None, None
                 size: 200, 200
+                size_hint: None, None
                 background_normal: ''
                 background_color: (48/255, 84/255, 150/255, 0)  
                 on_press: app.root.current = 'main'
@@ -473,22 +457,3 @@
                     source: 'png_files/button_back.png'  
                     center_x: self.parent.center_x
                     center_y: self.parent.center_y
-
-            Button:
-                id: microphone_button
-                size_hint: None, None
-                size: 200, 200
-                background_normal: ''
-                background_color: (48/255, 84/255, 150/255, 0)  
-                on_press: root.toggle_microphone()
-                canvas.before:
-                    Color:
-                        rgba: 23/255, 107/255, 135/255, 1
-                    RoundedRectangle:
-                        pos: self.pos
-                        size: self.size
-                        radius: [32, 32, 32, 32]
-                Image:
-                    source: 'png_files/button_mic.png'  
-                    center_x: self.parent.center_x
-                    center_y: self.parent.center_y 
