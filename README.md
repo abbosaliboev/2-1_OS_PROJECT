@@ -22,5 +22,5 @@ Pretty Eyes는 시각적으로 불편함이 있는 분들을 위한 쇼핑 도�
 
 ![Pretty Eyes Logo](https://github.com/Hoogdle/2-1_OS_PROJECT/assets/129059558/16d66559-5cc4-456a-80c0-6d97e7a9f857)
 
-### 다운로드 링크
+### exe 파일 다운로드 링크
 [Pretty Eyes 다운로드](https://drive.google.com/drive/folders/1CjGqLcs7YoofUFtsGzbzXvhj4OyA_nu9)
